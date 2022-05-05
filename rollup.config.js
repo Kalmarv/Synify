@@ -45,7 +45,7 @@ export default {
   plugins: [
     replace({
       preventAssignment: true,
-      "http://localhost:8888": "https://three-spot.vercel.app/",
+      "http://localhost:8888": "https://three-spot-kalmarv.vercel.app/",
     }),
     svelte({
       compilerOptions: {
