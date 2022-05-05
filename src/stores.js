@@ -13,7 +13,7 @@ export const code = readable(null, function start(set) {
 });
 
 export const appUrl = readable(null, function start(set) {
-  set("http://localhost:8888");
+  set("ROLLUP_REPLACE");
 });
 
 export const tokenExpired = writable(false);
