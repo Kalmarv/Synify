@@ -65,11 +65,11 @@
   </div>
 {/if}
 
-{#if $tokenExpired}
+<!-- {#if $tokenExpired}
   <section class="expired-token">
     <p>Token expired! Please log out and log back in again.</p>
     <a href={$appUrl}>
       <button>Logout</button>
     </a>
   </section>
-{/if}
+{/if} -->
