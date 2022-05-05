@@ -1,5 +1,4 @@
 <script>
-  import { get } from "svelte/store";
   import { authToken, appUrl, code, clientID } from "./stores.js";
 
   // WHYYYYYYY

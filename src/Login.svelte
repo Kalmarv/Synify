@@ -1,5 +1,6 @@
 <script>
-  import { code, tokenExpired, appUrl, clientID } from "./stores.js";
+  import { code, appUrl, clientID } from "./stores.js";
+  import { Buffer } from "buffer/";
 
   const generateCodeChallenge = async (codeVerifier) => {
     const digest = await crypto.subtle.digest(
@@ -7,7 +8,8 @@
       new TextEncoder().encode(codeVerifier)
     );
 
-    const shaChallenge = btoa(String.fromCharCode(...new Uint8Array(digest)))
+    const shaChallenge = Buffer.from(digest)
+      .toString("base64")
       .replace(/=/g, "")
       .replace(/\+/g, "-")
       .replace(/\//g, "_");
