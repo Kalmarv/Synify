@@ -11,6 +11,7 @@
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-replace": "^4.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -22,7 +23,6 @@
     "buffer": "^6.0.3",
     "extract-colors": "^1.1.21",
     "sirv-cli": "^2.0.0",
-    "svelte-cubed": "^0.2.1",
     "three": "^0.139.2"
   }
 }
