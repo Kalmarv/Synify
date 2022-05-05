@@ -2,7 +2,7 @@
   import Playing from "./Playing.svelte";
   import Auth from "./Auth.svelte";
   import Login from "./Login.svelte";
-  import { code, tokenExpired, authToken } from "./stores.js";
+  import { code, authToken } from "./stores.js";
 </script>
 
 <main>
