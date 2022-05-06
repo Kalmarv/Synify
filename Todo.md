@@ -14,3 +14,4 @@
 - Add Error component with link to github to submit issue
 - What to do about unicode support, aka ੂ࿃ूੂළඕั✧✧ı̴̴̡ ̡̡͡|̲̲̲͡ ̲̲̲͡͡π̲̲͡͡ ɵੂ≢࿃ूੂ೧ູఠీੂ ඊູཀ ꐑ(ʅ͡͡͡͡͡͡͡͡͡͡͡(Ɵ
   - Kinda think this is impossible to solve, unless I find and want to load a font with 65k glyphs
+- Update Favicon
