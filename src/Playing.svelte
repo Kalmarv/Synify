@@ -13,6 +13,16 @@
 
   let playing;
 
+  const parseArtists = (artistJSON) => {
+    let artists = [];
+
+    for (let i = 0; i < artistJSON.length; i++) {
+      artists.push(artistJSON[i].name);
+    }
+
+    return artists.join(", ");
+  };
+
   async function getUserPlaying() {
     const res = await fetch(
       "https://api.spotify.com/v1/me/player/currently-playing",
@@ -26,7 +36,7 @@
       const data = await res.json();
 
       songName.set(data.item.name);
-      songArtist.set(data.item.album.artists[0].name);
+      songArtist.set(parseArtists(data.item.artists));
       songImage.set(data.item.album.images[0].url);
       songLink.set(data.item.external_urls.spotify);
 
