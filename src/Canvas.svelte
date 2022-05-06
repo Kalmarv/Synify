@@ -10,12 +10,15 @@
     Mesh,
     WebGLRenderer,
     Color,
+    Clock,
   } from "three";
   import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
   import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
   import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
   import extractColors from "extract-colors";
 
+  const clock = new Clock();
+  let delta = 0;
   let camera, scene, renderer;
   let albumMesh;
   let colors;
@@ -25,11 +28,11 @@
     loader.load("./fonts/Manrope_Regular.json", function (font) {
       const textGeometry = new TextGeometry(text, {
         font: font,
-        size: 50,
-        height: 10,
+        size: 0.25,
+        height: 0.075,
         curveSegments: 12,
-        bevelThickness: 1,
-        bevelSize: 1,
+        bevelThickness: 0.01,
+        bevelSize: 0.01,
         bevelEnabled: true,
       });
 
@@ -41,26 +44,29 @@
 
       scene.add(textMesh);
       textMesh.position.set(x, y, z);
+      textMesh.rotation.set(0, -45, 0);
       textMesh.name = name;
     });
   };
 
   const createAlbum = (scene) => {
-    const geometry = new BoxGeometry(200, 200, 200);
+    const geometry = new BoxGeometry(2, 2, 0.1);
     let texture = new TextureLoader().load($songImage);
     const material = new MeshBasicMaterial({ map: texture });
     albumMesh = new Mesh(geometry, material);
+    albumMesh.position.set(0, 0, -2);
     scene.add(albumMesh);
   };
 
   const init = () => {
     camera = new PerspectiveCamera(
-      70,
+      50,
       window.innerWidth / window.innerHeight,
-      0.1,
+      0.01,
       10000
     );
-    camera.position.z = 400;
+    camera.position.set(-2.46, 0.2, 2.34);
+    camera.rotation.set(-3.33, -27.5, -1.5);
 
     scene = new Scene();
     scene.background = new Color("#000000");
@@ -82,8 +88,11 @@
 
   const animate = () => {
     requestAnimationFrame(animate);
-    albumMesh.rotation.x += 0.005;
-    albumMesh.rotation.y += 0.01;
+
+    clock.getDelta();
+    delta = clock.elapsedTime;
+    albumMesh.rotation.x = Math.cos(delta) / 40;
+    albumMesh.rotation.y = Math.sin(delta) / 30;
     renderer.render(scene, camera);
   };
 
@@ -113,14 +122,14 @@
 
     createAlbum(scene);
     createText($songName, scene, "Title", colors[0].hex, {
-      x: 200,
-      y: 50,
-      z: 0,
+      x: 1.5,
+      y: 0.5,
+      z: -1,
     });
     createText($songArtist, scene, "Artist", colors[1].hex, {
-      x: 200,
-      y: -50,
-      z: 0,
+      x: 1.5,
+      y: -0.5,
+      z: -1,
     });
 
     animate();
@@ -131,14 +140,14 @@
         remove("Title");
         remove("Artist");
         createText($songName, scene, "Title", colors[0].hex, {
-          x: 200,
-          y: 50,
-          z: 0,
+          x: 1.5,
+          y: 0.5,
+          z: -1,
         });
         createText($songArtist, scene, "Artist", colors[1].hex, {
-          x: 200,
-          y: -50,
-          z: 0,
+          x: 1.5,
+          y: -1,
+          z: -1,
         });
       }
     }, 1000);

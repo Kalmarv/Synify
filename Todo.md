@@ -7,6 +7,7 @@
 - https://fjolt.com/article/3d-web-gl-javascript-gradient-effect
 - Add 'Made with ❤ by Kalmarv with Svelte, Threejs, and Spotify
 - UI to control some settings
+  - Save settings to local storage and apply them
 - Styling
 - Auto-refresh token
 - Setup domain with Vercel
