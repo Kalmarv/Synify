@@ -32,7 +32,8 @@
       label: "Album Scale",
     })
     .on("change", (ev) => {
-      console.log(ev);
+      window.localStorage.setItem("albumScaleX", ev.value);
+      window.localStorage.setItem("albumScaleY", ev.value);
       albumMesh.scale.x = ev.value;
       albumMesh.scale.y = ev.value;
     });
@@ -70,7 +71,11 @@
   };
 
   const createAlbum = (scene) => {
-    const geometry = new BoxGeometry(2, 2, 0.1);
+    const geometry = new BoxGeometry(
+      window.localStorage.getItem("albumScaleX") || 2,
+      window.localStorage.getItem("albumScaleY") || 2,
+      0.1
+    );
     let texture = new TextureLoader().load($songImage);
     const material = new MeshBasicMaterial({ map: texture });
     albumMesh = new Mesh(geometry, material);
