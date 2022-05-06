@@ -1,17 +1,15 @@
 # TODO
 
-- FIX LOCAL STORAGE????
+- FIX LOCAL STORAGE FOR CODE VERIFIER????
 - Logout button
 - Clear local storage on logout
 - Clicking song opens link to song
-- Make artists include all artists
 - https://fjolt.com/article/3d-web-gl-javascript-gradient-effect
 - Add 'Made with ❤ by Kalmarv with Svelte, Threejs, and Spotify
 - UI to control some settings
 - Styling
 - Auto-refresh token
-- Fix btoa
-- Change URL to shorter Vercel url, maybe get domain
+- Setup domain with Vercel
 - Make it not load Manrope every time?
 - Check if token is expired properly
 - Check all API responses for errors and properly handle them
