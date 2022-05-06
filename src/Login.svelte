@@ -1,5 +1,5 @@
 <script>
-  import { code, appUrl, clientID } from "./stores.js";
+  import { code, appUrl, clientID, tokenExpired } from "./stores.js";
   import { Buffer } from "buffer/";
 
   const generateCodeChallenge = async (codeVerifier) => {
@@ -67,11 +67,9 @@
   </div>
 {/if}
 
-<!-- {#if $tokenExpired}
-  <section class="expired-token">
-    <p>Token expired! Please log out and log back in again.</p>
-    <a href={$appUrl}>
-      <button>Logout</button>
-    </a>
-  </section>
-{/if} -->
+{#if $tokenExpired}
+  <p>Token expired! Please log out and log back in again.</p>
+  <a href={$appUrl}>
+    <button>Logout</button>
+  </a>
+{/if}
