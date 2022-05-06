@@ -25,7 +25,9 @@
 
   const params = {
     albumScale:
-      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
+      "settings" in window.localStorage
+        ? JSON.parse(window.localStorage.getItem("settings")).albumScale
+        : 2,
   };
 
   pane
@@ -88,8 +90,12 @@
     albumMesh = new Mesh(geometry, material);
     albumMesh.position.set(0, 0, -2);
     albumMesh.scale.set(
-      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
-      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
+      "settings" in window.localStorage
+        ? JSON.parse(window.localStorage.getItem("settings")).albumScale
+        : 2,
+      "settings" in window.localStorage
+        ? JSON.parse(window.localStorage.getItem("settings")).albumScale
+        : 2,
       0.1
     );
     scene.add(albumMesh);
