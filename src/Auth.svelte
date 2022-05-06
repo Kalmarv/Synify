@@ -4,7 +4,7 @@
   // WHYYYYYYY
   const code_verifier = localStorage.getItem("code_verifier");
 
-  async function requestAuth() {
+  const requestAuth = async () => {
     const res = await fetch("https://accounts.spotify.com/api/token", {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -22,7 +22,7 @@
     let json = await res.json();
 
     authToken.set(json.access_token);
-  }
+  };
 
   if ($code) requestAuth();
 </script>

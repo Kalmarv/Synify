@@ -53,7 +53,7 @@
     scene.add(albumMesh);
   };
 
-  function init() {
+  const init = () => {
     camera = new PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
@@ -72,7 +72,7 @@
 
     window.addEventListener("resize", onWindowResize);
     new OrbitControls(camera, renderer.domElement);
-  }
+  };
 
   const onWindowResize = () => {
     camera.aspect = window.innerWidth / window.innerHeight;

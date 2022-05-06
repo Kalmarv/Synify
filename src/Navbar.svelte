@@ -4,7 +4,7 @@
 
   let user;
 
-  async function getUserData() {
+  const getUserData = async () => {
     const res = await fetch("https://api.spotify.com/v1/me", {
       headers: {
         Authorization: "Bearer " + $authToken,
@@ -16,7 +16,7 @@
     } else {
       tokenExpired.set(true);
     }
-  }
+  };
 
   onMount(async () => {
     getUserData();
