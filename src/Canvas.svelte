@@ -32,11 +32,21 @@
       label: "Album Scale",
     })
     .on("change", (ev) => {
-      window.localStorage.setItem("albumScaleX", ev.value);
-      window.localStorage.setItem("albumScaleY", ev.value);
+      console.log(ev.value);
+      console.log(albumMesh.scale);
       albumMesh.scale.x = ev.value;
       albumMesh.scale.y = ev.value;
     });
+
+  const tweakPaneButton = pane.addButton({
+    title: "Save Settings",
+  });
+
+  tweakPaneButton.on("click", () => {
+    let preset = pane.exportPreset();
+    console.log(preset);
+    window.localStorage.setItem("settings", JSON.stringify(preset));
+  });
 
   const clock = new Clock();
   let delta = 0;
@@ -71,15 +81,16 @@
   };
 
   const createAlbum = (scene) => {
-    const geometry = new BoxGeometry(
-      window.localStorage.getItem("albumScaleX") || 2,
-      window.localStorage.getItem("albumScaleY") || 2,
-      0.1
-    );
+    const geometry = new BoxGeometry();
     let texture = new TextureLoader().load($songImage);
     const material = new MeshBasicMaterial({ map: texture });
     albumMesh = new Mesh(geometry, material);
     albumMesh.position.set(0, 0, -2);
+    albumMesh.scale.set(
+      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
+      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
+      0.1
+    );
     scene.add(albumMesh);
   };
 
