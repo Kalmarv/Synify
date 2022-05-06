@@ -24,7 +24,8 @@
   });
 
   const params = {
-    albumScale: 2,
+    albumScale:
+      JSON.parse(window.localStorage.getItem("settings")).albumScale || 2,
   };
 
   pane
