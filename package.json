@@ -23,6 +23,7 @@
     "buffer": "^6.0.3",
     "extract-colors": "^1.1.21",
     "sirv-cli": "^2.0.0",
-    "three": "^0.139.2"
+    "three": "^0.139.2",
+    "tweakpane": "^3.0.8"
   }
 }

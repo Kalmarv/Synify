@@ -16,6 +16,26 @@
   import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
   import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
   import extractColors from "extract-colors";
+  import { Pane } from "tweakpane";
+
+  const pane = new Pane({
+    title: "Parameters",
+    expanded: false,
+  });
+
+  const params = {
+    albumScale: 2,
+  };
+
+  pane
+    .addInput(params, "albumScale", {
+      label: "Album Scale",
+    })
+    .on("change", (ev) => {
+      console.log(ev);
+      albumMesh.scale.x = ev.value;
+      albumMesh.scale.y = ev.value;
+    });
 
   const clock = new Clock();
   let delta = 0;
