@@ -18,7 +18,13 @@
   import extractColors from "extract-colors";
   import { Pane } from "tweakpane";
 
-  let settings = window.localStorage.getItem("settingsExist");
+  const getSetting = (item) => {
+    try {
+      return JSON.parse(window.localStorage.getItem("settings"))[item];
+    } catch {
+      return null;
+    }
+  };
 
   const pane = new Pane({
     title: "Parameters",
@@ -26,9 +32,7 @@
   });
 
   const params = {
-    albumScale: settings
-      ? JSON.parse(window.localStorage.getItem("settings")).albumScale
-      : 2,
+    albumScale: getSetting("albumScale") || 2,
   };
 
   pane
@@ -48,7 +52,6 @@
     let preset = pane.exportPreset();
     console.log(preset);
     window.localStorage.setItem("settings", JSON.stringify(preset));
-    window.localStorage.setItem("settingsExist", 1);
   });
 
   const clock = new Clock();
@@ -90,12 +93,8 @@
     albumMesh = new Mesh(geometry, material);
     albumMesh.position.set(0, 0, -2);
     albumMesh.scale.set(
-      settings
-        ? JSON.parse(window.localStorage.getItem("settings")).albumScale
-        : 2,
-      settings
-        ? JSON.parse(window.localStorage.getItem("settings")).albumScale
-        : 2,
+      getSetting("albumScale") || 2,
+      getSetting("albumScale") || 2,
       0.1
     );
     scene.add(albumMesh);
