@@ -6,8 +6,6 @@ export const appUrl = readable(null, function start(set) {
   set("ROLLUP_REPLACE");
 });
 
-export const tokenExpired = writable(false);
-
 export let authToken = writable(null);
 export let refreshToken = writable(null);
 

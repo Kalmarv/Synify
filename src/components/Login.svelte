@@ -1,5 +1,5 @@
 <script>
-  import { code, appUrl, clientID, tokenExpired } from "../stores.js";
+  import { code, appUrl, clientID } from "../stores.js";
   import { Buffer } from "buffer/";
 
   const generateCodeChallenge = async (codeVerifier) => {
@@ -64,11 +64,4 @@
       >Connect to Spotify</button
     >
   </div>
-{/if}
-
-{#if $tokenExpired}
-  <p>Token expired! Please log out and log back in again.</p>
-  <a href={$appUrl}>
-    <button>Logout</button>
-  </a>
 {/if}

@@ -4,7 +4,6 @@
   import { onMount } from "svelte";
   import {
     authToken,
-    tokenExpired,
     songName,
     songArtist,
     songImage,
