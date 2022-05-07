@@ -1,5 +1,11 @@
 <script>
-  import { authToken, appUrl, code, clientID } from "../stores.js";
+  import {
+    authToken,
+    refreshToken,
+    appUrl,
+    code,
+    clientID,
+  } from "../stores.js";
 
   const requestAuth = async () => {
     const res = await fetch("https://accounts.spotify.com/api/token", {
@@ -20,6 +26,7 @@
 
     if (res.status === 200) {
       authToken.set(json.access_token);
+      refreshToken.set(json.refresh_token);
     } else {
       console.error(res);
     }

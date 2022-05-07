@@ -9,6 +9,8 @@
     songArtist,
     songImage,
     songLink,
+    clientID,
+    refreshToken,
   } from "../stores.js";
 
   let playingSong;
@@ -44,7 +46,25 @@
     } else if (res.status == 204) {
       playingSong = false;
     } else if (res.status == 401) {
-      tokenExpired.set(true);
+      const refreshRes = await fetch("https://accounts.spotify.com/api/token", {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method: "post",
+        body: new URLSearchParams({
+          client_id: $clientID,
+          grant_type: "refresh_token",
+          refresh_token: $refreshToken,
+          code_verifier: window.localStorage.getItem("code_verifier"),
+        }),
+      });
+
+      let json = await refreshRes.json();
+
+      if (refreshRes.status === 200) {
+        authToken.set(json.access_token);
+        refreshToken.set(json.refresh_token);
+      }
     } else {
       const errorResponse = await res.json();
       const errorMessage = errorResponse.error.message;
