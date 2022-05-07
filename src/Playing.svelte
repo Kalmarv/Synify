@@ -43,6 +43,8 @@
       playing = true;
     } else if (res.status == 204) {
       playing = false;
+    } else if (res.status == 500) {
+      console.error("Server Error", res);
     } else {
       tokenExpired.set(true);
     }
