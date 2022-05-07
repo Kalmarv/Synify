@@ -19,7 +19,6 @@
   import extractColors from "extract-colors";
   import { Pane } from "tweakpane";
 
-  // Hmm, I'd like to choose primary colors, and also not choose duplicates
   const choose = (arr, count) => {
     let pickedColors = [];
 
@@ -105,11 +104,7 @@
     const material = new MeshBasicMaterial({ map: texture });
     albumMesh = new Mesh(geometry, material);
     albumMesh.position.set(0, 0, -2);
-    albumMesh.scale.set(
-      getSetting("albumScale") || 2,
-      getSetting("albumScale") || 2,
-      0.1
-    );
+    albumMesh.scale.set(params.albumScale, params.albumScale, 0.1);
     scene.add(albumMesh);
   };
 
