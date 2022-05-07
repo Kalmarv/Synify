@@ -1,4 +1,5 @@
 <script>
+  import Callback from "./components/Callback.svelte";
   import Playing from "./components/Playing.svelte";
   import Auth from "./components/Auth.svelte";
   import Login from "./components/Login.svelte";
@@ -7,6 +8,7 @@
 
 <main>
   <Login />
+  <Callback />
 
   {#if $code}
     <Auth />

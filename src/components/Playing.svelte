@@ -23,6 +23,13 @@
     return artists.join(", ");
   };
 
+  //   {
+  //   "error": {
+  //     "status": 401,
+  //     "message": "The access token expired"
+  //   }
+  // }
+
   async function getUserPlaying() {
     const res = await fetch(
       "https://api.spotify.com/v1/me/player/currently-playing",
