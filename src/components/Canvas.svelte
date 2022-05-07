@@ -11,12 +11,18 @@
     WebGLRenderer,
     Color,
     Clock,
+    Cache,
   } from "three";
   import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
   import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
   import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
   import extractColors from "extract-colors";
   import { Pane } from "tweakpane";
+
+  // Hmm, I'd like to choose primary colors, and also not choose duplicates
+  const choose = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)].hex;
+  };
 
   const getSetting = (item) => {
     try {
@@ -53,6 +59,7 @@
     window.localStorage.setItem("settings", JSON.stringify(preset));
   });
 
+  Cache.enabled = true;
   const clock = new Clock();
   let delta = 0;
   let camera, scene, renderer;
@@ -159,15 +166,14 @@
     init();
 
     colors = await getColors($songImage);
-    // scene.background.set(colors[3].hex);
 
     createAlbum(scene);
-    createText($songName, scene, "Title", colors[0].hex, {
+    createText($songName, scene, "Title", choose(colors), {
       x: 1.5,
       y: 0.5,
       z: -1,
     });
-    createText($songArtist, scene, "Artist", colors[1].hex, {
+    createText($songArtist, scene, "Artist", choose(colors), {
       x: 1.5,
       y: -0.5,
       z: -1,
@@ -180,12 +186,12 @@
         albumMesh.material.map = new TextureLoader().load($songImage);
         remove("Title");
         remove("Artist");
-        createText($songName, scene, "Title", colors[0].hex, {
+        createText($songName, scene, "Title", choose(colors), {
           x: 1.5,
           y: 0.5,
           z: -1,
         });
-        createText($songArtist, scene, "Artist", colors[1].hex, {
+        createText($songArtist, scene, "Artist", choose(colors), {
           x: 1.5,
           y: -0.5,
           z: -1,
