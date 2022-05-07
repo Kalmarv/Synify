@@ -1,16 +1,6 @@
 import { readable, writable } from "svelte/store";
 
-export const code = readable(null, function start(set) {
-  const url = new URL(window.location);
-  let searchTest = window.location.search;
-
-  while (window.location.search) {
-    const resCode = url.searchParams.get("code");
-    set(resCode);
-    window.history.pushState("object or string", "Title", "/");
-    searchTest = false;
-  }
-});
+export const code = writable(null);
 
 export const appUrl = readable(null, function start(set) {
   set("ROLLUP_REPLACE");
