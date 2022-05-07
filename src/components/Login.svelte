@@ -45,16 +45,15 @@
 
     window.localStorage.setItem("code_verifier", codeVerifier);
 
-    window.location = generateUrlWithSearchParams(
-      "https://accounts.spotify.com/authorize",
-      {
+    window.location.replace(
+      generateUrlWithSearchParams("https://accounts.spotify.com/authorize", {
         response_type: "code",
         client_id: $clientID,
         scope,
         code_challenge_method: "S256",
         code_challenge,
         redirect_uri: $appUrl,
-      }
+      })
     );
   };
 </script>

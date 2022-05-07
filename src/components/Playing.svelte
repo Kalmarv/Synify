@@ -11,7 +11,7 @@
     songLink,
   } from "../stores.js";
 
-  let playing;
+  let playingSong;
 
   const parseArtists = (artistJSON) => {
     let artists = [];
@@ -22,13 +22,6 @@
 
     return artists.join(", ");
   };
-
-  //   {
-  //   "error": {
-  //     "status": 401,
-  //     "message": "The access token expired"
-  //   }
-  // }
 
   async function getUserPlaying() {
     const res = await fetch(
@@ -47,13 +40,17 @@
       songImage.set(data.item.album.images[0].url);
       songLink.set(data.item.external_urls.spotify);
 
-      playing = true;
+      playingSong = true;
     } else if (res.status == 204) {
-      playing = false;
-    } else if (res.status == 500) {
-      console.error("Server Error", res);
-    } else {
+      playingSong = false;
+    } else if (res.status == 401) {
       tokenExpired.set(true);
+    } else {
+      const errorResponse = await res.json();
+      const errorMessage = errorResponse.error.message;
+      const errorStatus = errorResponse.error.status;
+
+      console.error(errorStatus, errorMessage);
     }
   }
 
@@ -66,10 +63,10 @@
   });
 </script>
 
-{#if playing == true}
+{#if playingSong == true}
   <Canvas />
 {/if}
-{#if playing == false}
+{#if playingSong == false}
   <Navbar />
   <h1>Try playing a song</h1>
 {/if}

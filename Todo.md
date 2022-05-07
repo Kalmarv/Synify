@@ -1,6 +1,5 @@
 # TODO
 
-- FIX LOCAL STORAGE FOR CODE VERIFIER????
 - Logout button
 - Clicking song opens link to song
 - https://fjolt.com/article/3d-web-gl-javascript-gradient-effect
@@ -9,9 +8,6 @@
 - Check if token is expired properly
   - Auto-refresh token
 - Setup domain with Vercel
-- Make it not load Manrope every time?
 - Check all API responses for errors and properly handle them
 - Add Error component with link to github to submit issue
-- What to do about unicode support, aka ੂ࿃ूੂළඕั✧✧ı̴̴̡ ̡̡͡|̲̲̲͡ ̲̲̲͡͡π̲̲͡͡ ɵੂ≢࿃ूੂ೧ູఠీੂ ඊູཀ ꐑ(ʅ͡͡͡͡͡͡͡͡͡͡͡(Ɵ
-  - Kinda think this is impossible to solve, unless I find and want to load a font with 65k glyphs
 - Update Favicon
