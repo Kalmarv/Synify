@@ -9,6 +9,7 @@ export const appUrl = readable(null, function start(set) {
 export const tokenExpired = writable(false);
 
 export let authToken = writable(null);
+export let refreshToken = writable(null);
 
 export const clientID = readable("6888734b4fc749cdb701c89482a3db41");
 
