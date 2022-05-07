@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { authToken, tokenExpired } from "./stores.js";
+  import { authToken, tokenExpired } from "../stores.js";
 
   let user;
 

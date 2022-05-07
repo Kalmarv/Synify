@@ -1,7 +1,7 @@
 <script>
-  import Playing from "./Playing.svelte";
-  import Auth from "./Auth.svelte";
-  import Login from "./Login.svelte";
+  import Playing from "./components/Playing.svelte";
+  import Auth from "./components/Auth.svelte";
+  import Login from "./components/Login.svelte";
   import { code, authToken } from "./stores.js";
 </script>
 
