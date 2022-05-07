@@ -1,7 +1,7 @@
 <script>
   import { authToken, appUrl, code, clientID } from "./stores.js";
 
-  // WHYYYYYYY
+  // Since Svelte stores do not persist on reload, we store in local storage
   const code_verifier = localStorage.getItem("code_verifier");
 
   const requestAuth = async () => {
@@ -18,6 +18,9 @@
         code_verifier: code_verifier,
       }),
     });
+
+    // Removing the local storage item so it doesn't get used on subsequent reloads
+    window.localStorage.removeItem("code_verifier");
 
     let json = await res.json();
 
