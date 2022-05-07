@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { songName, songArtist, songImage, songLink } from "./stores.js";
+  import { songName, songArtist, songImage, songLink } from "../stores.js";
   import {
     PerspectiveCamera,
     Scene,
@@ -50,7 +50,6 @@
 
   tweakPaneButton.on("click", () => {
     let preset = pane.exportPreset();
-    console.log(preset);
     window.localStorage.setItem("settings", JSON.stringify(preset));
   });
 
@@ -188,7 +187,7 @@
         });
         createText($songArtist, scene, "Artist", colors[1].hex, {
           x: 1.5,
-          y: -1,
+          y: -0.5,
           z: -1,
         });
       }

@@ -1,5 +1,5 @@
 <script>
-  import { authToken, appUrl, code, clientID } from "./stores.js";
+  import { authToken, appUrl, code, clientID } from "../stores.js";
 
   // Since Svelte stores do not persist on reload, we store in local storage
   const code_verifier = localStorage.getItem("code_verifier");

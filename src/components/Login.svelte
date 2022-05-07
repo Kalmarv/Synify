@@ -1,5 +1,5 @@
 <script>
-  import { code, appUrl, clientID, tokenExpired } from "./stores.js";
+  import { code, appUrl, clientID, tokenExpired } from "../stores.js";
   import { Buffer } from "buffer/";
 
   const generateCodeChallenge = async (codeVerifier) => {

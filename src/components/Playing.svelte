@@ -9,7 +9,7 @@
     songArtist,
     songImage,
     songLink,
-  } from "./stores.js";
+  } from "../stores.js";
 
   let playing;
 
