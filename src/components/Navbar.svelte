@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { authToken, tokenExpired } from "../stores.js";
+  import { authToken } from "../stores.js";
 
   let user;
 
@@ -13,8 +13,6 @@
     if (res.ok) {
       const data = await res.json();
       user = data;
-    } else {
-      tokenExpired.set(true);
     }
   };
 
