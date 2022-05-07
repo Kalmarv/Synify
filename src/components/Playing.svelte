@@ -54,7 +54,6 @@
           client_id: $clientID,
           grant_type: "refresh_token",
           refresh_token: $refreshToken,
-          code_verifier: window.localStorage.getItem("code_verifier"),
         }),
       });
 

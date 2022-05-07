@@ -20,8 +20,15 @@
   import { Pane } from "tweakpane";
 
   // Hmm, I'd like to choose primary colors, and also not choose duplicates
-  const choose = (arr) => {
-    return arr[Math.floor(Math.random() * arr.length)].hex;
+  const choose = (arr, count) => {
+    let pickedColors = [];
+
+    for (let i = 0; i < count; i++) {
+      pickedColors.push(arr[i % arr.length].hex);
+    }
+    // return arr[Math.floor(Math.random() * arr.length)].hex;
+
+    return pickedColors;
   };
 
   const getSetting = (item) => {
@@ -165,15 +172,15 @@
   onMount(async () => {
     init();
 
-    colors = await getColors($songImage);
+    colors = choose(await getColors($songImage), 2);
 
     createAlbum(scene);
-    createText($songName, scene, "Title", choose(colors), {
+    createText($songName, scene, "Title", colors[0], {
       x: 1.5,
       y: 0.5,
       z: -1,
     });
-    createText($songArtist, scene, "Artist", choose(colors), {
+    createText($songArtist, scene, "Artist", colors[1], {
       x: 1.5,
       y: -0.5,
       z: -1,
@@ -182,16 +189,16 @@
     animate();
     setInterval(async () => {
       if (albumMesh.material.map.source.data.currentSrc !== $songImage) {
-        colors = await getColors($songImage);
+        colors = choose(await getColors($songImage), 2);
         albumMesh.material.map = new TextureLoader().load($songImage);
         remove("Title");
         remove("Artist");
-        createText($songName, scene, "Title", choose(colors), {
+        createText($songName, scene, "Title", colors[0], {
           x: 1.5,
           y: 0.5,
           z: -1,
         });
-        createText($songArtist, scene, "Artist", choose(colors), {
+        createText($songArtist, scene, "Artist", colors[1], {
           x: 1.5,
           y: -0.5,
           z: -1,
