@@ -71,6 +71,8 @@
   let camera, scene, renderer;
   let albumMesh;
   let colors;
+  // because the songName calls a function on update, basic check for if the scene is ready
+  let initScene = 0;
 
   const createText = (text, scene, name, color, { x, y, z }) => {
     const loader = new FontLoader();
@@ -91,10 +93,10 @@
 
       const textMesh = new Mesh(textGeometry, textMaterial);
 
-      scene.add(textMesh);
       textMesh.position.set(x, y, z);
       textMesh.rotation.set(0, -45, 0);
       textMesh.name = name;
+      scene.add(textMesh);
     });
   };
 
@@ -128,6 +130,7 @@
 
     window.addEventListener("resize", onWindowResize);
     new OrbitControls(camera, renderer.domElement);
+    initScene = 1;
   };
 
   const onWindowResize = () => {
@@ -147,11 +150,10 @@
   };
 
   const remove = (name) => {
-    const object = scene.getObjectByProperty("name", name);
-
-    object.geometry.dispose();
-    object.material.dispose();
-    scene.remove(object);
+    const textObject = scene.getObjectByProperty("name", name);
+    textObject.geometry.dispose();
+    textObject.material.dispose();
+    scene.remove(textObject);
   };
 
   const getColors = async (imageURL) => {
@@ -163,6 +165,29 @@
 
     return await colorRes;
   };
+
+  const update = async () => {
+    if (initScene) {
+      colors = choose(await getColors($songImage), 2);
+      if (albumMesh?.material?.map) {
+        albumMesh.material.map = new TextureLoader().load($songImage);
+      }
+      remove("Artist");
+      remove("Title");
+      createText($songName, scene, "Title", colors[0], {
+        x: 1.5,
+        y: 0.5,
+        z: -1,
+      });
+      createText($songArtist, scene, "Artist", colors[1], {
+        x: 1.5,
+        y: -0.5,
+        z: -1,
+      });
+    }
+  };
+
+  $: $songName, update();
 
   onMount(async () => {
     init();
@@ -182,23 +207,5 @@
     });
 
     animate();
-    setInterval(async () => {
-      if (albumMesh.material.map.source.data.currentSrc !== $songImage) {
-        colors = choose(await getColors($songImage), 2);
-        albumMesh.material.map = new TextureLoader().load($songImage);
-        remove("Title");
-        remove("Artist");
-        createText($songName, scene, "Title", colors[0], {
-          x: 1.5,
-          y: 0.5,
-          z: -1,
-        });
-        createText($songArtist, scene, "Artist", colors[1], {
-          x: 1.5,
-          y: -0.5,
-          z: -1,
-        });
-      }
-    }, 1000);
   });
 </script>
