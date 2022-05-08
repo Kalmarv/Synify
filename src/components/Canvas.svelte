@@ -187,7 +187,8 @@
     }
   };
 
-  $: $songName, update();
+  // Update scene on song name, or artist change
+  $: $songName, $songArtist, update();
 
   onMount(async () => {
     init();
