@@ -1,24 +1,24 @@
 <script>
-  import { onMount } from "svelte";
-  import { authToken } from "../stores.js";
+  import { onMount } from 'svelte'
+  import { authToken } from '../stores.js'
 
-  let user;
+  let user
 
   const getUserData = async () => {
-    const res = await fetch("https://api.spotify.com/v1/me", {
+    const res = await fetch('https://api.spotify.com/v1/me', {
       headers: {
-        Authorization: "Bearer " + $authToken,
+        Authorization: 'Bearer ' + $authToken,
       },
-    });
+    })
     if (res.ok) {
-      const data = await res.json();
-      user = data;
+      const data = await res.json()
+      user = data
     }
-  };
+  }
 
   onMount(async () => {
-    getUserData();
-  });
+    getUserData()
+  })
 </script>
 
 {#if user}
