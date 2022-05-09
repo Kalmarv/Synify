@@ -16,6 +16,7 @@
     Cache,
     Raycaster,
     Vector2,
+    Vector3,
     BackSide,
     ShaderMaterial,
   } from 'three'
@@ -170,6 +171,12 @@
   const update = async () => {
     if (initScene) {
       colors = choose(await getColors($songImage), 2)
+      let shaderColors = choose(await getColors($songImage), 4)
+
+      uniforms.col1.value = new Color(shaderColors[0])
+      uniforms.col2.value = new Color(shaderColors[1])
+      uniforms.col3.value = new Color(shaderColors[2])
+      uniforms.col4.value = new Color(shaderColors[3])
       if (albumMesh?.material?.map) {
         albumMesh.material.map = new TextureLoader().load($songImage)
       }
@@ -188,6 +195,22 @@
     uVu: {
       type: 'v2',
       value: new Vector2(),
+    },
+    col1: {
+      type: 'v3',
+      value: new Vector3(),
+    },
+    col2: {
+      type: 'v3',
+      value: new Vector3(),
+    },
+    col3: {
+      type: 'v3',
+      value: new Vector3(),
+    },
+    col4: {
+      type: 'v3',
+      value: new Vector3(),
     },
   }
 
@@ -211,6 +234,13 @@
     init()
 
     colors = choose(await getColors($songImage), 2)
+    let shaderColors = choose(await getColors($songImage), 4)
+
+    uniforms.col1.value = new Color(shaderColors[0])
+    uniforms.col2.value = new Color(shaderColors[1])
+    uniforms.col3.value = new Color(shaderColors[2])
+    uniforms.col4.value = new Color(shaderColors[3])
+
     createAlbum(scene)
     createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })
     createText($songArtist, scene, 'Artist', colors[1], { x: 1.5, y: -0.5, z: -1 })
