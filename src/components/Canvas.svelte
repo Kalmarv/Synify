@@ -1,9 +1,7 @@
 <script>
   import { onMount } from 'svelte'
-  import { tweened } from 'svelte/motion'
-  import { cubicOut } from 'svelte/easing'
-  import { songName, songArtist, songImage, songLink } from '../stores.js'
-  import { choose, getSetting, getColors, params } from '../helpers.js'
+  import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
+  import { choose, getColors, params, remove } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
@@ -124,11 +122,6 @@
     }
   }
 
-  const albumProgress = tweened(1, {
-    duration: 150,
-    cubicOut,
-  })
-
   const onHover = (e) => {
     e.preventDefault()
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1
@@ -141,11 +134,11 @@
 
       if (object.name == 'Album') {
         document.getElementById('body').style.cursor = 'pointer'
-        albumProgress.set(1.15)
+        albumProg.set(1.15)
       }
     } else {
       document.getElementById('body').style.cursor = 'default'
-      albumProgress.set(1)
+      albumProg.set(1)
     }
   }
 
@@ -159,15 +152,12 @@
     albumMesh.rotation.x = Math.cos(delta) / 40
     albumMesh.rotation.y = Math.sin(delta) / 30
     renderer.render(scene, camera)
-
-    albumMesh.scale.set(params.albumScale * $albumProgress, params.albumScale * $albumProgress, 0.1 * $albumProgress)
   }
 
-  const remove = (name) => {
-    const textObject = scene.getObjectByProperty('name', name)
-    textObject.geometry.dispose()
-    textObject.material.dispose()
-    scene.remove(textObject)
+  const tweening = () => {
+    if (initScene) {
+      albumMesh.scale.set(params.albumScale * $albumProg, params.albumScale * $albumProg, 0.1 * $albumProg)
+    }
   }
 
   const update = async () => {
@@ -176,8 +166,8 @@
       if (albumMesh?.material?.map) {
         albumMesh.material.map = new TextureLoader().load($songImage)
       }
-      remove('Artist')
-      remove('Title')
+      remove(scene, 'Artist')
+      remove(scene, 'Title')
       createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })
       createText($songArtist, scene, 'Artist', colors[1], { x: 1.5, y: -0.5, z: -1 })
     }
@@ -185,6 +175,7 @@
 
   // Update scene on song name, or artist change
   $: $songName, $songArtist, update()
+  $: $albumProg, tweening()
 
   onMount(async () => {
     init()

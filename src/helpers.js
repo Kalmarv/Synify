@@ -33,4 +33,11 @@ const params = {
   albumScale: getSetting('albumScale') || 2,
 }
 
-export { choose, getSetting, getColors, params }
+const remove = (scene, name) => {
+  const textObject = scene.getObjectByProperty('name', name)
+  textObject.geometry.dispose()
+  textObject.material.dispose()
+  scene.remove(textObject)
+}
+
+export { choose, getSetting, getColors, params, remove }
