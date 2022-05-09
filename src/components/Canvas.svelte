@@ -6,6 +6,7 @@
     PerspectiveCamera,
     Scene,
     BoxGeometry,
+    IcosahedronGeometry,
     TextureLoader,
     MeshBasicMaterial,
     Mesh,
@@ -15,11 +16,21 @@
     Cache,
     Raycaster,
     Vector2,
+    BackSide,
+    ShaderMaterial,
   } from 'three'
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { Pane } from 'tweakpane'
+  import { bgVert, bgFrag } from '../shaders/bgShader'
+
+  Cache.enabled = true
+  const clock = new Clock()
+  let delta = 0
+  let camera, scene, renderer, albumMesh, colors, raycaster, mouse, bgMesh
+  // because the songName calls a function on update, basic check for if the scene is ready
+  let initScene = 0
 
   const pane = new Pane({
     title: 'Parameters',
@@ -37,13 +48,6 @@
     let preset = pane.exportPreset()
     window.localStorage.setItem('settings', JSON.stringify(preset))
   })
-
-  Cache.enabled = true
-  const clock = new Clock()
-  let delta = 0
-  let camera, scene, renderer, albumMesh, colors, raycaster, mouse
-  // because the songName calls a function on update, basic check for if the scene is ready
-  let initScene = 0
 
   const createText = (text, scene, name, color, { x, y, z }) => {
     const loader = new FontLoader()
@@ -91,7 +95,7 @@
     scene = new Scene()
     scene.background = new Color('#000000')
 
-    renderer = new WebGLRenderer({ antialias: true })
+    renderer = new WebGLRenderer({ antialias: true, precision: 'mediump' })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
@@ -105,6 +109,8 @@
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
+    uniforms.uVu.value.x = renderer.domElement.width
+    uniforms.uVu.value.y = renderer.domElement.height
   }
 
   const onMouseDown = (e) => {
@@ -129,7 +135,7 @@
     raycaster.setFromCamera(mouse, camera)
     let intersects = raycaster.intersectObject(scene, true)
 
-    if (intersects.length > 0) {
+    if (intersects.length > 1) {
       let object = intersects[0].object
 
       if (object.name == 'Album') {
@@ -149,6 +155,7 @@
 
     clock.getDelta()
     delta = clock.elapsedTime
+    uniforms.u_time.value = delta
     albumMesh.rotation.x = Math.cos(delta) / 40
     albumMesh.rotation.y = Math.sin(delta) / 30
     renderer.render(scene, camera)
@@ -173,6 +180,29 @@
     }
   }
 
+  let uniforms = {
+    u_time: {
+      type: 'f',
+      value: 1.0,
+    },
+    uVu: {
+      type: 'v2',
+      value: new Vector2(),
+    },
+  }
+
+  const createBg = () => {
+    let bgMaterial = new ShaderMaterial({
+      uniforms: uniforms,
+      vertexShader: bgVert,
+      fragmentShader: bgFrag,
+      side: BackSide,
+    })
+
+    bgMesh = new Mesh(new IcosahedronGeometry(20, 4), bgMaterial)
+    scene.add(bgMesh)
+  }
+
   // Update scene on song name, or artist change
   $: $songName, $songArtist, update()
   $: $albumProg, tweening()
@@ -184,6 +214,7 @@
     createAlbum(scene)
     createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })
     createText($songArtist, scene, 'Artist', colors[1], { x: 1.5, y: -0.5, z: -1 })
+    createBg()
 
     animate()
   })
