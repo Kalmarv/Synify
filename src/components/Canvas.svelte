@@ -1,5 +1,7 @@
 <script>
   import { onMount } from "svelte";
+  import { tweened } from "svelte/motion";
+  import { cubicOut } from "svelte/easing";
   import { songName, songArtist, songImage, songLink } from "../stores.js";
   import {
     PerspectiveCamera,
@@ -142,7 +144,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
-  const onClick = (e) => {
+  const onMouseDown = (e) => {
     e.preventDefault();
 
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -161,15 +163,50 @@
     }
   };
 
+  const progress = tweened(1, {
+    duration: 150,
+    cubicOut,
+  });
+
+  const onHover = (e) => {
+    e.preventDefault();
+
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    let intersects = raycaster.intersectObject(scene, true);
+
+    if (intersects.length > 0) {
+      let object = intersects[0].object;
+
+      if (object.name == "Album") {
+        document.getElementById("body").style.cursor = "pointer";
+        progress.set(1.15);
+      }
+    } else {
+      document.getElementById("body").style.cursor = "default";
+      progress.set(1);
+    }
+  };
+
   const animate = () => {
     requestAnimationFrame(animate);
-    renderer.domElement.addEventListener("click", onClick, false);
+    renderer.domElement.addEventListener("mousedown", onMouseDown, false);
+    renderer.domElement.addEventListener("mousemove", onHover, false);
 
     clock.getDelta();
     delta = clock.elapsedTime;
     albumMesh.rotation.x = Math.cos(delta) / 40;
     albumMesh.rotation.y = Math.sin(delta) / 30;
     renderer.render(scene, camera);
+
+    albumMesh.scale.set(
+      params.albumScale * $progress,
+      params.albumScale * $progress,
+      0.1 * $progress
+    );
   };
 
   const remove = (name) => {
