@@ -12,6 +12,8 @@
     Color,
     Clock,
     Cache,
+    Raycaster,
+    Vector2,
   } from "three";
   import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
   import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
@@ -68,9 +70,7 @@
   Cache.enabled = true;
   const clock = new Clock();
   let delta = 0;
-  let camera, scene, renderer;
-  let albumMesh;
-  let colors;
+  let camera, scene, renderer, albumMesh, colors, raycaster, mouse;
   // because the songName calls a function on update, basic check for if the scene is ready
   let initScene = 0;
 
@@ -107,10 +107,13 @@
     albumMesh = new Mesh(geometry, material);
     albumMesh.position.set(0, 0, -2);
     albumMesh.scale.set(params.albumScale, params.albumScale, 0.1);
+    albumMesh.name = "Album";
     scene.add(albumMesh);
   };
 
   const init = () => {
+    raycaster = new Raycaster();
+    mouse = new Vector2();
     camera = new PerspectiveCamera(
       50,
       window.innerWidth / window.innerHeight,
@@ -139,8 +142,28 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
 
+  const onClick = (e) => {
+    e.preventDefault();
+
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    let intersects = raycaster.intersectObject(scene, true);
+
+    if (intersects.length > 0) {
+      let object = intersects[0].object;
+
+      if (object.name == "Album") {
+        window.open($songLink, "_blank");
+      }
+    }
+  };
+
   const animate = () => {
     requestAnimationFrame(animate);
+    renderer.domElement.addEventListener("click", onClick, false);
 
     clock.getDelta();
     delta = clock.elapsedTime;
