@@ -1,6 +1,5 @@
 <script>
   import Canvas from './Canvas.svelte'
-  import Navbar from './Navbar.svelte'
   import { onMount } from 'svelte'
   import { authToken, songName, songArtist, songImage, songLink, clientID, refreshToken } from '../stores.js'
 
@@ -32,7 +31,24 @@
 
       playingSong = true
     } else if (res.status == 204) {
-      playingSong = false
+      const getUserData = async () => {
+        const res = await fetch('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: 'Bearer ' + $authToken,
+          },
+        })
+        if (res.ok) {
+          const data = await res.json()
+          songName.set(`Hi, ${data.display_name}!`)
+        }
+      }
+
+      playingSong = true
+      getUserData()
+
+      songArtist.set('Try playing a song')
+      songImage.set('./nothingPlaying.png')
+      songLink.set('https://github.com/Kalmarv/ThreeSpot')
     } else if (res.status == 401) {
       const refreshRes = await fetch('https://accounts.spotify.com/api/token', {
         headers: {
@@ -72,8 +88,4 @@
 
 {#if playingSong == true}
   <Canvas />
-{/if}
-{#if playingSong == false}
-  <Navbar />
-  <h1>Try playing a song</h1>
 {/if}
