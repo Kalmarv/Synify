@@ -24,7 +24,8 @@
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { Pane } from 'tweakpane'
-  import { bgVert, bgFrag } from '../shaders/bgShader'
+  import { skyVert } from '../shaders/skyVert'
+  import { skyFrag } from '../shaders/skyFrag'
 
   Cache.enabled = true
   const clock = new Clock()
@@ -217,8 +218,8 @@
   const createBg = () => {
     let bgMaterial = new ShaderMaterial({
       uniforms: uniforms,
-      vertexShader: bgVert,
-      fragmentShader: bgFrag,
+      vertexShader: skyVert,
+      fragmentShader: skyFrag,
       side: BackSide,
     })
 
