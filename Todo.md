@@ -8,3 +8,5 @@
 - Setup domain with Vercel
 - Add Error component with link to github to submit issue
 - Update Favicon
+
+- https://open.spotify.com/track/1f7mS9pbnFLuKzOR34cpHk?si=5e529ef80d86456b breaks? Seems like anything from that album

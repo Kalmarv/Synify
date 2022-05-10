@@ -104,6 +104,9 @@
 
     window.addEventListener('resize', onWindowResize)
     new OrbitControls(camera, renderer.domElement)
+    uniforms.u_resolution.value.x = renderer.domElement.width
+    uniforms.u_resolution.value.y = renderer.domElement.height
+
     initScene = 1
   }
 
@@ -111,8 +114,8 @@
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
-    uniforms.uVu.value.x = renderer.domElement.width
-    uniforms.uVu.value.y = renderer.domElement.height
+    uniforms.u_resolution.value.x = renderer.domElement.width
+    uniforms.u_resolution.value.y = renderer.domElement.height
   }
 
   const onMouseDown = (e) => {
@@ -193,7 +196,7 @@
       type: 'f',
       value: 1.0,
     },
-    uVu: {
+    u_resolution: {
       type: 'v2',
       value: new Vector2(),
     },
