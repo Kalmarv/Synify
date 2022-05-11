@@ -48,4 +48,39 @@ const params = {
   gain: getSetting('gain') || defaultSettings.gain,
 }
 
-export { choose, getSetting, getColors, remove, params, defaultSettings }
+const uniforms = {
+  u_time: {
+    type: 'f',
+    value: params.lacunarity,
+  },
+  lacunarity: {
+    type: 'f',
+    value: params.gain,
+  },
+  gain: {
+    type: 'f',
+    value: 0.52,
+  },
+  u_resolution: {
+    type: 'v2',
+    value: [0, 0, 0],
+  },
+  col1: {
+    type: 'v3',
+    value: [0, 0, 0],
+  },
+  col2: {
+    type: 'v3',
+    value: [0, 0, 0],
+  },
+  col3: {
+    type: 'v3',
+    value: [0, 0, 0],
+  },
+  col4: {
+    type: 'v3',
+    value: [0, 0, 0],
+  },
+}
+
+export { choose, getSetting, getColors, remove, params, defaultSettings, uniforms }
