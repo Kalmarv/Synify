@@ -8,8 +8,6 @@ uniform vec3 col2;
 uniform vec3 col3;
 uniform vec3 col4;
 uniform float u_time;
-
-uniform float tint;
 uniform float lacunarity;
 uniform float gain;
 
