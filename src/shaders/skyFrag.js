@@ -143,7 +143,7 @@ void main() {
     q.y = fbm( st + vec2(1.0));
 
     vec2 r = vec2(0.);
-    r.x = fbm( st + 1.0 * q + vec2(1.7,9.2)+ 0.15 * u_time );
+    r.x = fbm( st + 1.0 * q + vec2(1.7,9.2)+ 0.15 * u_time);
     r.y = fbm( st + 1.0 * q + vec2(8.3,2.8)+ 0.126 * u_time);
 
     float f = fbm(st+r);

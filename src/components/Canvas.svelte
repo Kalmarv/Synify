@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
-  import { choose, getColors, defaultSettings, remove, params } from '../helpers.js'
+  import { choose, getColors, defaultSettings, remove, params, uniforms } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
@@ -15,7 +15,6 @@
     Cache,
     Raycaster,
     Vector2,
-    Vector3,
     BackSide,
     ShaderMaterial,
   } from 'three'
@@ -203,41 +202,6 @@
     }
   }
 
-  const uniforms = {
-    u_time: {
-      type: 'f',
-      value: params.lacunarity,
-    },
-    lacunarity: {
-      type: 'f',
-      value: params.gain,
-    },
-    gain: {
-      type: 'f',
-      value: 0.52,
-    },
-    u_resolution: {
-      type: 'v2',
-      value: new Vector2(),
-    },
-    col1: {
-      type: 'v3',
-      value: new Vector3(),
-    },
-    col2: {
-      type: 'v3',
-      value: new Vector3(),
-    },
-    col3: {
-      type: 'v3',
-      value: new Vector3(),
-    },
-    col4: {
-      type: 'v3',
-      value: new Vector3(),
-    },
-  }
-
   const createBg = () => {
     let bgMaterial = new ShaderMaterial({
       uniforms: uniforms,
@@ -264,6 +228,8 @@
     uniforms.col2.value = new Color(shaderColors[1])
     uniforms.col3.value = new Color(shaderColors[2])
     uniforms.col4.value = new Color(shaderColors[3])
+
+    // Shader uniforms do not seem to set from params, so we set them manually on the first render
     uniforms.lacunarity.value = params.lacunarity
     uniforms.gain.value = params.gain
 
