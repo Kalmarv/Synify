@@ -56,6 +56,15 @@
 
 {#if $code == null}
   <div id="login">
-    <button class="login-btn" on:click={requestSpotifyAuth}>Connect to Spotify</button>
+    <h1 class="font-bold text-8xl text-center m-8">ThreeSpot</h1>
+    <div class="flex items-center justify-center">
+      <div
+        class="flex justify-center w-max items-center flex-row bg-green-500 p-4 m-8 rounded-full shadow-md font-bold cursor-pointer"
+        on:click={requestSpotifyAuth}
+      >
+        <div><button class="text-center font-bold">Connect to Spotify</button></div>
+        <div><img class="ml-2 object-cover w-8" src="./spotifylogo.png" alt="" /></div>
+      </div>
+    </div>
   </div>
 {/if}
