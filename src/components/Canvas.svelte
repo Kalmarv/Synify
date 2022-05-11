@@ -1,12 +1,11 @@
 <script>
   import { onMount } from 'svelte'
   import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
-  import { choose, getColors, params, remove } from '../helpers.js'
+  import { choose, getColors, defaultSettings, remove, params } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
     BoxGeometry,
-    IcosahedronGeometry,
     TextureLoader,
     MeshBasicMaterial,
     Mesh,
@@ -43,12 +42,24 @@
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
   })
+  pane.addInput(params, 'lacunarity', { label: 'Lacunarity' }).on('change', (ev) => {
+    uniforms.lacunarity.value = ev.value
+  })
+  pane.addInput(params, 'gain', { label: 'Gain' }).on('change', (ev) => {
+    uniforms.gain.value = ev.value
+  })
 
-  const tweakPaneButton = pane.addButton({ title: 'Save Settings' })
+  const saveSettings = pane.addButton({ title: 'Save Settings' })
+  const resetSettings = pane.addButton({ title: 'Reset Settings' })
 
-  tweakPaneButton.on('click', () => {
+  saveSettings.on('click', () => {
     let preset = pane.exportPreset()
     window.localStorage.setItem('settings', JSON.stringify(preset))
+  })
+
+  resetSettings.on('click', () => {
+    window.localStorage.clear()
+    pane.importPreset(defaultSettings)
   })
 
   const createText = (text, scene, name, color, { x, y, z }) => {
@@ -181,6 +192,7 @@
       uniforms.col2.value = new Color(shaderColors[1])
       uniforms.col3.value = new Color(shaderColors[2])
       uniforms.col4.value = new Color(shaderColors[3])
+
       if (albumMesh?.material?.map) {
         albumMesh.material.map = new TextureLoader().load($songImage)
       }
@@ -191,10 +203,18 @@
     }
   }
 
-  let uniforms = {
+  const uniforms = {
     u_time: {
       type: 'f',
-      value: 1.0,
+      value: params.lacunarity,
+    },
+    lacunarity: {
+      type: 'f',
+      value: params.gain,
+    },
+    gain: {
+      type: 'f',
+      value: 0.52,
     },
     u_resolution: {
       type: 'v2',
@@ -226,7 +246,7 @@
       side: BackSide,
     })
 
-    bgMesh = new Mesh(new IcosahedronGeometry(20, 4), bgMaterial)
+    bgMesh = new Mesh(new BoxGeometry(20, 20, 20), bgMaterial)
     scene.add(bgMesh)
   }
 
@@ -244,6 +264,8 @@
     uniforms.col2.value = new Color(shaderColors[1])
     uniforms.col3.value = new Color(shaderColors[2])
     uniforms.col4.value = new Color(shaderColors[3])
+    uniforms.lacunarity.value = params.lacunarity
+    uniforms.gain.value = params.gain
 
     createAlbum(scene)
     createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })

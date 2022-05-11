@@ -29,10 +29,6 @@ const getColors = async (imageURL) => {
   return await colorRes
 }
 
-const params = {
-  albumScale: getSetting('albumScale') || 2,
-}
-
 const remove = (scene, name) => {
   const textObject = scene.getObjectByProperty('name', name)
   textObject.geometry.dispose()
@@ -40,4 +36,16 @@ const remove = (scene, name) => {
   scene.remove(textObject)
 }
 
-export { choose, getSetting, getColors, params, remove }
+const defaultSettings = {
+  albumScale: 2,
+  lacunarity: 1.95,
+  gain: 0.52,
+}
+
+const params = {
+  albumScale: getSetting('albumScale') || defaultSettings.albumScale,
+  lacunarity: getSetting('lacunarity') || defaultSettings.lacunarity,
+  gain: getSetting('gain') || defaultSettings.gain,
+}
+
+export { choose, getSetting, getColors, remove, params, defaultSettings }
