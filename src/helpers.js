@@ -37,12 +37,14 @@ const remove = (scene, name) => {
 }
 
 const defaultSettings = {
-  albumScale: 2,
+  cameraFOV: 26,
+  albumScale: 2.5,
   lacunarity: 1.95,
   gain: 0.52,
 }
 
 const params = {
+  cameraFOV: getSetting('cameraFOV') || defaultSettings.cameraFOV,
   albumScale: getSetting('albumScale') || defaultSettings.albumScale,
   lacunarity: getSetting('lacunarity') || defaultSettings.lacunarity,
   gain: getSetting('gain') || defaultSettings.gain,
