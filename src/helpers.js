@@ -83,4 +83,32 @@ const uniforms = {
   },
 }
 
-export { choose, getSetting, getColors, remove, params, defaultSettings, uniforms }
+const textFormatter = (text, maxLength) => {
+  if (!text) return ''
+
+  const splitText = text.split(' ')
+  let tempText = ''
+  let returnedText = ''
+
+  for (let i = 0; i < splitText.length; i++) {
+    if (tempText.length + splitText[i].length <= maxLength) {
+      tempText += splitText[i] + ' '
+    } else {
+      returnedText += tempText + '\n'
+      tempText = splitText[i] + ' '
+    }
+  }
+  returnedText += tempText
+  return returnedText.trim()
+}
+
+const textSpacing = (name, artist, maxLength) => {
+  const nameFormatted = textFormatter(name, maxLength)
+  const artistFormatted = textFormatter(artist, maxLength)
+  const nameLines = nameFormatted.split('\n').length
+  const artistLines = artistFormatted.split('\n').length
+  const totalLines = nameLines + artistLines
+  return { nameFormatted, artistFormatted, nameLines, artistLines, totalLines }
+}
+
+export { choose, getSetting, getColors, remove, params, defaultSettings, uniforms, textFormatter, textSpacing }
