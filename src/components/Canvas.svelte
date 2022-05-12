@@ -46,6 +46,10 @@
     expanded: false,
   })
 
+  pane.addInput(params, 'cameraFOV', { label: 'Camera FOV' }).on('change', (ev) => {
+    camera.fov = ev.value
+    camera.updateProjectionMatrix()
+  })
   pane.addInput(params, 'albumScale', { label: 'Album Scale' }).on('change', (ev) => {
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
@@ -88,7 +92,7 @@
       const textMesh = new Mesh(textGeometry, textMaterial)
 
       textMesh.position.set(x, y, z)
-      textMesh.rotation.set(0, -45, 0)
+      textMesh.rotation.set(0, -44.95, 0)
       textMesh.name = name
       scene.add(textMesh)
     })
@@ -108,10 +112,10 @@
   const init = () => {
     raycaster = new Raycaster()
     mouse = new Vector2()
-    camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 10000)
+    camera = new PerspectiveCamera(params.cameraFOV, window.innerWidth / window.innerHeight, 0.01, 10000)
 
-    camera.position.set(-2.46, 0.2, 2.34)
-    camera.rotation.set(-3.33, -27.5, -1.5)
+    camera.position.set(-6.539036451399613, 0.11775855411335079, 4.115906106711372)
+    camera.rotation.set(0, -1, 0)
 
     scene = new Scene()
     scene.background = new Color('#000000')
@@ -181,7 +185,7 @@
     delta = clock.elapsedTime
     uniforms.u_time.value = delta
     albumMesh.rotation.x = Math.cos(delta) / 40
-    albumMesh.rotation.y = Math.sin(delta) / 30
+    albumMesh.rotation.y = Math.PI * -0.1 + Math.sin(delta) / 30
     renderer.render(scene, camera)
   }
 
