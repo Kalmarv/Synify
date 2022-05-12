@@ -1,7 +1,16 @@
 <script>
   import { onMount } from 'svelte'
   import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
-  import { choose, getColors, defaultSettings, remove, params, uniforms } from '../helpers.js'
+  import {
+    choose,
+    getColors,
+    defaultSettings,
+    remove,
+    params,
+    uniforms,
+    textFormatter,
+    textSpacing,
+  } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
@@ -66,8 +75,8 @@
     loader.load('./fonts/Manrope_Regular.json', function (font) {
       const textGeometry = new TextGeometry(text, {
         font: font,
-        size: 0.25,
-        height: 0.075,
+        size: 0.2,
+        height: 0.05,
         curveSegments: 12,
         bevelThickness: 0.01,
         bevelSize: 0.01,
@@ -183,23 +192,34 @@
   }
 
   const update = async () => {
-    if (initScene) {
-      colors = choose(await getColors($songImage), 2)
-      let shaderColors = choose(await getColors($songImage), 4)
+    if (!initScene) return
 
-      uniforms.col1.value = new Color(shaderColors[0])
-      uniforms.col2.value = new Color(shaderColors[1])
-      uniforms.col3.value = new Color(shaderColors[2])
-      uniforms.col4.value = new Color(shaderColors[3])
+    colors = choose(await getColors($songImage), 2)
+    let shaderColors = choose(await getColors($songImage), 4)
 
-      if (albumMesh?.material?.map) {
-        albumMesh.material.map = new TextureLoader().load($songImage)
-      }
-      remove(scene, 'Artist')
-      remove(scene, 'Title')
-      createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })
-      createText($songArtist, scene, 'Artist', colors[1], { x: 1.5, y: -0.5, z: -1 })
+    uniforms.col1.value = new Color(shaderColors[0])
+    uniforms.col2.value = new Color(shaderColors[1])
+    uniforms.col3.value = new Color(shaderColors[2])
+    uniforms.col4.value = new Color(shaderColors[3])
+
+    if (albumMesh?.material?.map) {
+      albumMesh.material.map = new TextureLoader().load($songImage)
     }
+    remove(scene, 'Artist')
+    remove(scene, 'Title')
+
+    const textInfo = textSpacing($songName, $songArtist, 30)
+
+    createText(textInfo.nameFormatted, scene, 'Title', colors[0], {
+      x: 1.5,
+      y: (textInfo.totalLines + textInfo.totalLines / 2) * 0.1,
+      z: -1,
+    })
+    createText(textInfo.artistFormatted, scene, 'Artist', colors[1], {
+      x: 1.5,
+      y: -(textInfo.nameLines * 2) * 0.2 + (textInfo.totalLines + textInfo.totalLines / 2) * 0.1,
+      z: -1,
+    })
   }
 
   const createBg = () => {
@@ -234,8 +254,22 @@
     uniforms.gain.value = params.gain
 
     createAlbum(scene)
-    createText($songName, scene, 'Title', colors[0], { x: 1.5, y: 0.5, z: -1 })
-    createText($songArtist, scene, 'Artist', colors[1], { x: 1.5, y: -0.5, z: -1 })
+
+    const textInfo = textSpacing($songName, $songArtist, 30)
+    console.log(textInfo)
+
+    // Math for placement breaks down at about 9+ lines
+    // IDK why, but it's good enough for now I think
+    createText(textInfo.nameFormatted, scene, 'Title', colors[0], {
+      x: 1.5,
+      y: (textInfo.totalLines + textInfo.totalLines / 2) * 0.1,
+      z: -1,
+    })
+    createText(textInfo.artistFormatted, scene, 'Artist', colors[1], {
+      x: 1.5,
+      y: -(textInfo.nameLines * 2) * 0.2 + (textInfo.totalLines + textInfo.totalLines / 2) * 0.1,
+      z: -1,
+    })
     createBg()
 
     animate()
