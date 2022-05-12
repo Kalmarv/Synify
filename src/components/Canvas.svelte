@@ -46,18 +46,22 @@
     expanded: false,
   })
 
-  pane.addInput(params, 'cameraFOV', { label: 'Camera FOV' }).on('change', (ev) => {
+  const tab = pane.addTab({
+    pages: [{ title: 'Camera' }, { title: 'Album' }, { title: 'Shader' }],
+  })
+
+  tab.pages[0].addInput(params, 'cameraFOV', { label: 'Camera FOV', min: 0, max: 100 }).on('change', (ev) => {
     camera.fov = ev.value
     camera.updateProjectionMatrix()
   })
-  pane.addInput(params, 'albumScale', { label: 'Album Scale' }).on('change', (ev) => {
+  tab.pages[1].addInput(params, 'albumScale', { label: 'Album Scale', min: 0, max: 10 }).on('change', (ev) => {
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
   })
-  pane.addInput(params, 'lacunarity', { label: 'Lacunarity' }).on('change', (ev) => {
+  tab.pages[2].addInput(params, 'lacunarity', { label: 'Lacunarity', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.lacunarity.value = ev.value
   })
-  pane.addInput(params, 'gain', { label: 'Gain' }).on('change', (ev) => {
+  tab.pages[2].addInput(params, 'gain', { label: 'Gain', min: 0, max: 1 }).on('change', (ev) => {
     uniforms.gain.value = ev.value
   })
 
