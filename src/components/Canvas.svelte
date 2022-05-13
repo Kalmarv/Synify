@@ -1,16 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
-  import {
-    choose,
-    getColors,
-    defaultSettings,
-    remove,
-    params,
-    uniforms,
-    textFormatter,
-    textSpacing,
-  } from '../helpers.js'
+  import { choose, getColors, defaultSettings, remove, params, uniforms, textSpacing } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
