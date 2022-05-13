@@ -264,7 +264,6 @@
     createAlbum(scene)
 
     const textInfo = textSpacing($songName, $songArtist, 30)
-    console.log(textInfo)
 
     // Math for placement breaks down at about 9+ lines
     // IDK why, but it's good enough for now I think
