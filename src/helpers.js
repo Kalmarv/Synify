@@ -31,8 +31,8 @@ const getColors = async (imageURL) => {
 
 const remove = (scene, name) => {
   const textObject = scene.getObjectByProperty('name', name)
-  textObject?.geometry.dispose()
-  textObject?.material.dispose()
+  textObject.geometry.dispose()
+  textObject.material.dispose()
   scene.remove(textObject)
 }
 
