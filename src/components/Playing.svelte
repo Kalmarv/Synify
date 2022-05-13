@@ -24,13 +24,24 @@
     if (res.status == 200) {
       const data = await res.json()
 
-      songName.set(data.item.name)
-      songArtist.set(parseArtists(data.item.artists))
-      songImage.set(data.item.album.images[0].url)
-      songLink.set(data.item.external_urls.spotify)
+      if (data.currently_playing_type == 'track') {
+        songName.set(data.item.name)
+        songArtist.set(parseArtists(data.item.artists))
+        songImage.set(data.item.album.images[0].url)
+        songLink.set(data.item.external_urls.spotify)
+      }
+
+      if (data.currently_playing_type == 'episode') {
+        console.log(data)
+        songName.set("Spotify doesn't give podcast images :(")
+        songArtist.set('Try a song instead')
+        songImage.set('./sadamongus.png')
+        songLink.set('https://github.com/Kalmarv/ThreeSpot')
+      }
 
       playingSong = true
     } else if (res.status == 204) {
+      // Token expired
       const getUserData = async () => {
         const res = await fetch('https://api.spotify.com/v1/me', {
           headers: {
