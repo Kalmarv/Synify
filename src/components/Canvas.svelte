@@ -65,7 +65,7 @@
   })
 
   resetSettings.on('click', () => {
-    window.localStorage.clear()
+    window.localStorage.removeItem('settings')
     pane.importPreset(defaultSettings)
   })
 

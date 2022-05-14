@@ -7,14 +7,13 @@
 </script>
 
 <main>
-  <Login />
-  <Callback />
-
-  {#if $code}
-    {#if $authToken}
-      <Playing />
-    {/if}
+  {#if !$code}
+    <Login />
+    <Callback />
+  {:else if $code && !$authToken}
     <Auth />
+  {:else}
+    <Playing />
   {/if}
 </main>
 
