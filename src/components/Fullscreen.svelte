@@ -45,10 +45,13 @@
     right: 1rem;
     max-width: 2rem;
     opacity: 0.25;
-    transition: opacity 0.5s;
+    transition: 0.1s;
   }
 
   img:hover {
     opacity: 1;
+    bottom: 0.9rem;
+    right: 0.9rem;
+    max-width: 2.2rem;
   }
 </style>
