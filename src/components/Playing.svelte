@@ -1,5 +1,6 @@
 <script>
   import Canvas from './Canvas.svelte'
+  import Fullscreen from './Fullscreen.svelte'
   import { onMount } from 'svelte'
   import { authToken, songName, songArtist, songImage, songLink, clientID, refreshToken } from '../stores.js'
 
@@ -34,7 +35,7 @@
       if (data.currently_playing_type == 'episode') {
         songName.set("Spotify doesn't give podcast images :(")
         songArtist.set('Try a song instead')
-        songImage.set('./sadamongus.png')
+        songImage.set('./pictures/sadamongus.png')
         songLink.set('https://github.com/Kalmarv/ThreeSpot')
       }
 
@@ -56,7 +57,7 @@
       getUserData()
 
       songArtist.set('Try playing a song')
-      songImage.set('./nothingPlaying.png')
+      songImage.set('./pictures/nothingPlaying.png')
       songLink.set('https://github.com/Kalmarv/ThreeSpot')
     } else if (res.status == 401) {
       // Token expired
@@ -99,3 +100,4 @@
 {#if playingSong == true}
   <Canvas />
 {/if}
+<Fullscreen />
