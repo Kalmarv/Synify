@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
+    "daisyui": "^2.14.3",
     "extract-colors": "^1.1.21",
     "sirv-cli": "^2.0.0",
     "three": "^0.139.2",
