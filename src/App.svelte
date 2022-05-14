@@ -11,10 +11,10 @@
   <Callback />
 
   {#if $code}
-    <Auth />
     {#if $authToken}
       <Playing />
     {/if}
+    <Auth />
   {/if}
 </main>
 
