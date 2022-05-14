@@ -4,25 +4,14 @@
   import Fullscreen from './Fullscreen.svelte'
   import { onMount } from 'svelte'
   import { authToken, songName, songArtist, songImage, songLink, clientID, refreshToken } from '../stores.js'
+  import { parseArtists } from '../helpers.js'
 
   let playingSong
   let anError = null
 
-  const parseArtists = (artistJSON) => {
-    let artists = []
-
-    for (let i = 0; i < artistJSON.length; i++) {
-      artists.push(artistJSON[i].name)
-    }
-
-    return artists.join(', ')
-  }
-
   async function getUserPlaying() {
     const res = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-      headers: {
-        Authorization: 'Bearer ' + $authToken,
-      },
+      headers: { Authorization: 'Bearer ' + $authToken },
     })
     if (res.status == 200) {
       const data = await res.json()

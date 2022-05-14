@@ -19,6 +19,16 @@ const getSetting = (item) => {
   }
 }
 
+const parseArtists = (artistJSON) => {
+  let artists = []
+
+  for (let i = 0; i < artistJSON.length; i++) {
+    artists.push(artistJSON[i].name)
+  }
+
+  return artists.join(', ')
+}
+
 const getColors = async (imageURL) => {
   const options = {
     crossOrigin: 'Anonymous',
@@ -113,4 +123,15 @@ const textSpacing = (name, artist, maxLength) => {
   return { nameFormatted, artistFormatted, nameLines, artistLines, totalLines }
 }
 
-export { choose, getSetting, getColors, remove, params, defaultSettings, uniforms, textFormatter, textSpacing }
+export {
+  choose,
+  getSetting,
+  getColors,
+  remove,
+  params,
+  defaultSettings,
+  uniforms,
+  textFormatter,
+  textSpacing,
+  parseArtists,
+}
