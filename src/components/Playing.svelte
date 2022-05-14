@@ -51,6 +51,10 @@
       songImage.set('./pictures/nothingPlaying.png')
       songLink.set('https://github.com/Kalmarv/ThreeSpot')
     } else if (res.status == 401) {
+      const errorMessage = await res.json()
+
+      if (errorMessage.error.message !== 'The access token expired') return
+
       // Token expired
       const refreshRes = await fetch('https://accounts.spotify.com/api/token', {
         headers: {
@@ -69,6 +73,7 @@
       if (refreshRes.status === 200) {
         authToken.set(json.access_token)
         refreshToken.set(json.refresh_token)
+        getUserPlaying()
       }
     } else {
       const errorResponse = await res.json()
