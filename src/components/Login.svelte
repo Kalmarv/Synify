@@ -63,7 +63,7 @@
         on:click={requestSpotifyAuth}
       >
         <div><button class="text-center font-bold">Connect to Spotify</button></div>
-        <div><img class="ml-2 object-cover w-8" src="./spotifylogo.png" alt="" /></div>
+        <div><img class="ml-2 object-cover w-8" src="./pictures/spotifylogo.png" alt="" /></div>
       </div>
     </div>
   </div>
