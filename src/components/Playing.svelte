@@ -1,10 +1,12 @@
 <script>
   import Canvas from './Canvas.svelte'
+  import Error from './Error.svelte'
   import Fullscreen from './Fullscreen.svelte'
   import { onMount } from 'svelte'
   import { authToken, songName, songArtist, songImage, songLink, clientID, refreshToken } from '../stores.js'
 
   let playingSong
+  let anError = null
 
   const parseArtists = (artistJSON) => {
     let artists = []
@@ -84,7 +86,7 @@
       const errorMessage = errorResponse.error.message
       const errorStatus = errorResponse.error.status
 
-      console.error(errorStatus, errorMessage)
+      anError = errorMessage
     }
   }
 
@@ -101,3 +103,7 @@
   <Canvas />
 {/if}
 <Fullscreen />
+
+{#if anError !== null}
+  <Error errorMsg={anError} />
+{/if}
