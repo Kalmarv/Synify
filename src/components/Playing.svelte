@@ -53,8 +53,10 @@
     } else if (res.status == 401) {
       const errorMessage = await res.json()
 
-      if (errorMessage.error.message !== 'The access token expired') return
-
+      if (errorMessage.error.message !== 'The access token expired') {
+        anError = errorMessage.error.message
+        return
+      }
       // Token expired
       const refreshRes = await fetch('https://accounts.spotify.com/api/token', {
         headers: {
@@ -76,11 +78,8 @@
         getUserPlaying()
       }
     } else {
-      const errorResponse = await res.json()
-      const errorMessage = errorResponse.error.message
-      const errorStatus = errorResponse.error.status
-
-      anError = errorMessage
+      const errorMessage = await res.json()
+      anError = errorMessage.error.message
     }
   }
 
