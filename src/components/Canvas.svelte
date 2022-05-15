@@ -22,8 +22,8 @@
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { Pane } from 'tweakpane'
-  import { skyVert } from '../shaders/skyVert'
-  import { skyFrag } from '../shaders/skyFrag'
+  import skyFrag from '../shaders/sky.frag.glsl'
+  import skyVert from '../shaders/sky.vert.glsl'
 
   Cache.enabled = true
   const clock = new Clock()
