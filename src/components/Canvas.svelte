@@ -45,11 +45,11 @@
     camera.fov = ev.value
     camera.updateProjectionMatrix()
   })
-  tab.pages[0].addInput(params, 'cameraPos', { x: {}, y: {}, z: {} }).on('change', (ev) => {
+  tab.pages[0].addInput(params, 'cameraPos', { hidden: true, x: {}, y: {}, z: {} }).on('change', (ev) => {
     camera.position.set(ev.value.x, ev.value.y, ev.value.z)
     camera.updateProjectionMatrix()
   })
-  tab.pages[0].addInput(params, 'cameraQuat', { x: {}, y: {}, z: {}, w: {} }).on('change', (ev) => {
+  tab.pages[0].addInput(params, 'cameraQuat', { hidden: true, x: {}, y: {}, z: {}, w: {} }).on('change', (ev) => {
     camera.quaternion.set(ev.value.x, ev.value.y, ev.value.z, ev.value.w)
     camera.updateProjectionMatrix()
   })
@@ -202,7 +202,6 @@
       z: camera.quaternion.z,
       w: camera.quaternion.w,
     }
-    pane.refresh()
 
     renderer.render(scene, camera)
   }
