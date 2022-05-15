@@ -32,7 +32,7 @@
         songName.set("Spotify doesn't give podcast images :(")
         songArtist.set('Try a song instead')
         songImage.set('./pictures/sadamongus.png')
-        songLink.set('https://github.com/Kalmarv/ThreeSpot')
+        songLink.set('https://github.com/Kalmarv/Synify')
       }
 
       playingSong = true
@@ -54,7 +54,7 @@
 
       songArtist.set('Try playing a song')
       songImage.set('./pictures/nothingPlaying.png')
-      songLink.set('https://github.com/Kalmarv/ThreeSpot')
+      songLink.set('https://github.com/Kalmarv/Synify')
     } else if (res.status == 401) {
       const errorMessage = await res.json()
 
