@@ -18,3 +18,4 @@
 - When access token is expired, it just consoles an error and has to wait for a now playing function after 5 seconds to reset it,
   - If it's expired, refresh immediately
   - Probably put a limit on the and show an error to reset, so it doesn't get into an infinite loop hitting Spotify's API
+- User icon in bottom right?
