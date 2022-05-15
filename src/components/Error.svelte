@@ -9,7 +9,7 @@
   }
 </script>
 
-<div bind:this={nodeRef} class="alert alert-error shadow-lg m-8 max-w-md">
+<div bind:this={nodeRef} class="alert alert-error shadow-lg m-8 max-w-md absolute">
   <div>
     <svg
       on:click={() => nodeRef.parentNode.removeChild(nodeRef)}
