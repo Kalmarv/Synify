@@ -89,7 +89,7 @@
         Made by
         <a href="https://github.com/Kalmarv" class="link link-hover">Kalmarv</a> with ❤
       </p>
-      <a href="https://github.com/Kalmarv/ThreeSpot" class="text-gray-400 hover:text-white">
+      <a href="https://github.com/Kalmarv/Synify" class="text-gray-400 hover:text-white">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"
           ><path
             fill-rule="evenodd"
