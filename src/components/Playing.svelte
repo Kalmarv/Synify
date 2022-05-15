@@ -29,7 +29,7 @@
       }
 
       if (data.currently_playing_type == 'episode') {
-        songName.set("Spotify doesn't give podcast images :(")
+        songName.set('Playlist covers are a different API call, still need to implement :(')
         songArtist.set('Try a song instead')
         songImage.set('./pictures/sadamongus.png')
         songLink.set('https://github.com/Kalmarv/Synify')

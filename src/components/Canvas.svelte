@@ -45,6 +45,14 @@
     camera.fov = ev.value
     camera.updateProjectionMatrix()
   })
+  tab.pages[0].addInput(params, 'cameraPos', { x: {}, y: {}, z: {} }).on('change', (ev) => {
+    camera.position.set(ev.value.x, ev.value.y, ev.value.z)
+    camera.updateProjectionMatrix()
+  })
+  tab.pages[0].addInput(params, 'cameraQuat', { x: {}, y: {}, z: {}, w: {} }).on('change', (ev) => {
+    camera.quaternion.set(ev.value.x, ev.value.y, ev.value.z, ev.value.w)
+    camera.updateProjectionMatrix()
+  })
   tab.pages[1].addInput(params, 'albumScale', { label: 'Album Scale', min: 0, max: 10 }).on('change', (ev) => {
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
@@ -61,12 +69,14 @@
 
   saveSettings.on('click', () => {
     let preset = pane.exportPreset()
+    pane.refresh()
     window.localStorage.setItem('settings', JSON.stringify(preset))
   })
 
   resetSettings.on('click', () => {
     window.localStorage.removeItem('settings')
     pane.importPreset(defaultSettings)
+    camera.updateProjectionMatrix()
   })
 
   const createText = (text, scene, name, color, { x, y, z }) => {
@@ -109,8 +119,11 @@
     mouse = new Vector2()
     camera = new PerspectiveCamera(params.cameraFOV, window.innerWidth / window.innerHeight, 0.01, 10000)
 
-    camera.position.set(-6.539036451399613, 0.11775855411335079, 4.115906106711372)
-    camera.rotation.set(0, -1, 0)
+    // camera.position.set(-6.539036451399613, 0.11775855411335079, 4.115906106711372)
+    // camera.quaternion.set(0.8753876383119016, 0, -0.4833615858316864, 0)
+
+    camera.position.set(params.cameraPos.x, params.cameraPos.y, params.cameraPos.z)
+    camera.quaternion.set(params.cameraQuat.x, params.cameraQuat.y, params.cameraQuat.z, params.cameraQuat.w)
 
     scene = new Scene()
     scene.background = new Color('#000000')
@@ -181,6 +194,16 @@
     uniforms.u_time.value = delta
     albumMesh.rotation.x = Math.cos(delta) / 40
     albumMesh.rotation.y = Math.PI * -0.1 + Math.sin(delta) / 30
+
+    params.cameraPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
+    params.cameraQuat = {
+      x: camera.quaternion.x,
+      y: camera.quaternion.y,
+      z: camera.quaternion.z,
+      w: camera.quaternion.w,
+    }
+    pane.refresh()
+
     renderer.render(scene, camera)
   }
 

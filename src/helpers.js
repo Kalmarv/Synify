@@ -51,6 +51,17 @@ const defaultSettings = {
   albumScale: 2.5,
   lacunarity: 1.95,
   gain: 0.52,
+  cameraPos: {
+    x: -6.5390364514,
+    y: 0.1177585541,
+    z: 4.1159061067,
+  },
+  cameraQuat: {
+    x: -0.0066703966012795326,
+    y: -0.48336158583224653,
+    z: -0.0036831836985306192,
+    w: 0.8753876383115998,
+  },
 }
 
 const params = {
@@ -58,6 +69,8 @@ const params = {
   albumScale: getSetting('albumScale') || defaultSettings.albumScale,
   lacunarity: getSetting('lacunarity') || defaultSettings.lacunarity,
   gain: getSetting('gain') || defaultSettings.gain,
+  cameraPos: getSetting('cameraPos') || defaultSettings.cameraPos,
+  cameraQuat: getSetting('cameraQuat') || defaultSettings.cameraQuat,
 }
 
 const uniforms = {
