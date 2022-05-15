@@ -13,3 +13,4 @@
 - Fix removing and replacing fonts, very prone to breakage, especially on slow network connections
 - User icon in bottom right?
 - More params
+- Make readme
