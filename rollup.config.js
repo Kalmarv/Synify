@@ -42,7 +42,7 @@ export default {
   plugins: [
     replace({
       preventAssignment: true,
-      ROLLUP_REPLACE: !production ? 'http://localhost:8888' : 'https://three-spot.vercel.app/',
+      ROLLUP_REPLACE: !production ? 'http://localhost:8888' : 'https://synify.app/',
     }),
     svelte({
       preprocess: sveltePreprocess({

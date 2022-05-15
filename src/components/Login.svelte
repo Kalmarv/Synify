@@ -57,7 +57,7 @@
 <div id="login hero min-h-screen bg-base-200">
   <div class="hero-content text-center">
     <div class="max-w-md">
-      <h1 class="text-5xl font-bold m-8">ThreeSpot</h1>
+      <h1 class="text-5xl font-bold m-8">Synify</h1>
       <p class="py-6">Display your Spotify currently playing track in a beautiful way.</p>
     </div>
   </div>
