@@ -81,14 +81,14 @@
       >
     </div>
   </div>
-  <footer class="fixed bottom-0 footer items-center p-4 bg-neutral text-neutral-content ">
-    <div class="items-center grid-flow-col">
+</div>
+<footer class="fixed bottom-0 footer footer-center p-4 bg-base-300 text-base-content">
+  <div class="flex items-center justify-between">
+    <div class="flex space-x-6 mt-0">
       <p>
         Made by
         <a href="https://github.com/Kalmarv" class="link link-hover">Kalmarv</a> with ❤
       </p>
-    </div>
-    <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
       <a href="https://github.com/Kalmarv/ThreeSpot" class="text-gray-400 hover:text-white">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"
           ><path
@@ -99,5 +99,5 @@
         >
       </a>
     </div>
-  </footer>
-</div>
+  </div>
+</footer>
