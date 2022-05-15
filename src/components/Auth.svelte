@@ -1,5 +1,13 @@
 <script>
   import { authToken, refreshToken, appUrl, code, clientID } from '../stores.js'
+  import Error from './Error.svelte'
+
+  let accumulatedErrors = []
+
+  const newError = (msg) => {
+    accumulatedErrors.push(msg)
+    accumulatedErrors = accumulatedErrors
+  }
 
   const requestAuth = async () => {
     const res = await fetch('https://accounts.spotify.com/api/token', {
@@ -22,9 +30,13 @@
       authToken.set(json.access_token)
       refreshToken.set(json.refresh_token)
     } else {
-      console.error(res)
+      newError(json.error)
     }
   }
 
   if ($code) requestAuth()
 </script>
+
+{#each accumulatedErrors as error}
+  <Error errorMsg={error} />
+{/each}
