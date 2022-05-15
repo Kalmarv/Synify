@@ -7,7 +7,12 @@
   import { parseArtists } from '../helpers.js'
 
   let playingSong
-  let anError = null
+  let accumulatedErrors = []
+
+  const newError = (msg) => {
+    accumulatedErrors.push(msg)
+    accumulatedErrors = accumulatedErrors
+  }
 
   async function getUserPlaying() {
     const res = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -54,7 +59,7 @@
       const errorMessage = await res.json()
 
       if (errorMessage.error.message !== 'The access token expired') {
-        anError = errorMessage.error.message
+        newError(errorMessage.error.message)
         return
       }
       // Token expired
@@ -79,10 +84,9 @@
       }
     } else {
       const errorMessage = await res.json()
-      anError = errorMessage.error.message
+      newError(errorMessage.error.message)
     }
   }
-
   onMount(async () => {
     getUserPlaying()
     setInterval(() => {
@@ -97,6 +101,6 @@
 {/if}
 <Fullscreen />
 
-{#if anError !== null}
-  <Error errorMsg={anError} />
-{/if}
+{#each accumulatedErrors as error}
+  <Error errorMsg={error} />
+{/each}
