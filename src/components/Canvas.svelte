@@ -18,7 +18,6 @@
     BackSide,
     ShaderMaterial,
     MeshMatcapMaterial,
-    TangentSpaceNormalMap,
   } from 'three'
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
@@ -26,6 +25,9 @@
   import { Pane } from 'tweakpane'
   import skyFrag from '../shaders/sky.frag.glsl'
   import skyVert from '../shaders/sky.vert.glsl'
+  import textFrag1 from '../shaders/text1.frag.glsl'
+  import textFrag2 from '../shaders/text2.frag.glsl'
+  import textVert from '../shaders/text.vert.glsl'
 
   Cache.enabled = true
   const clock = new Clock()
@@ -95,16 +97,13 @@
         bevelEnabled: true,
       })
 
-      const matcapTexture = new TextureLoader().load('./pictures/textMatcap.png')
-      const textMaterial = new MeshMatcapMaterial({
-        color: color,
-        matcap: matcapTexture,
-        normalMapType: TangentSpaceNormalMap,
+      const textMaterial = new ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: textVert,
+        fragmentShader: name === 'Title' ? textFrag1 : textFrag2,
       })
 
       const textMesh = new Mesh(textGeometry, textMaterial)
-
-      textMesh.material.flatShading = false
       textMesh.position.set(x, y, z)
       textMesh.rotation.set(0, -44.95, 0)
       textMesh.name = name
