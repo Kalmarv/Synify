@@ -17,6 +17,8 @@
     Vector2,
     BackSide,
     ShaderMaterial,
+    MeshMatcapMaterial,
+    TangentSpaceNormalMap,
   } from 'three'
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
@@ -74,6 +76,7 @@
   })
 
   resetSettings.on('click', () => {
+    pane.refresh()
     window.localStorage.removeItem('settings')
     pane.importPreset(defaultSettings)
     camera.updateProjectionMatrix()
@@ -92,10 +95,16 @@
         bevelEnabled: true,
       })
 
-      let textMaterial = new MeshBasicMaterial({ color: color })
+      const matcapTexture = new TextureLoader().load('./pictures/textMatcap.png')
+      const textMaterial = new MeshMatcapMaterial({
+        color: color,
+        matcap: matcapTexture,
+        normalMapType: TangentSpaceNormalMap,
+      })
 
       const textMesh = new Mesh(textGeometry, textMaterial)
 
+      textMesh.material.flatShading = false
       textMesh.position.set(x, y, z)
       textMesh.rotation.set(0, -44.95, 0)
       textMesh.name = name
