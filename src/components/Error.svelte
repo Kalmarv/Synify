@@ -4,7 +4,10 @@
   let showError = false
 
   const resetSite = () => {
-    localStorage.clear()
+    window.localStorage.removeItem('code')
+    window.localStorage.removeItem('authToken')
+    window.localStorage.removeItem('code_verifier')
+    window.localStorage.removeItem('refreshToken')
     window.location.reload()
   }
 </script>
