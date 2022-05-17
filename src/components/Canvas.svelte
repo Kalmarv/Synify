@@ -15,9 +15,9 @@
     Cache,
     Raycaster,
     Vector2,
+    Vector3,
     BackSide,
     ShaderMaterial,
-    MeshMatcapMaterial,
   } from 'three'
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
@@ -57,6 +57,10 @@
     camera.quaternion.set(ev.value.x, ev.value.y, ev.value.z, ev.value.w)
     camera.updateProjectionMatrix()
   })
+  tab.pages[0].addInput(params, 'target', { hidden: true, x: {}, y: {}, z: {}, w: {} }).on('change', (ev) => {
+    controls.target = new Vector3(ev.value.x, ev.value.y, ev.value.z)
+    camera.updateProjectionMatrix()
+  })
   tab.pages[1].addInput(params, 'albumScale', { label: 'Album Scale', min: 0, max: 10 }).on('change', (ev) => {
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
@@ -85,6 +89,7 @@
     pane.refresh()
     window.localStorage.removeItem('settings')
     pane.importPreset(defaultSettings)
+    controls.target = new Vector3(params.target.x, params.target.y, params.target.z)
     camera.updateProjectionMatrix()
   })
 
@@ -144,23 +149,22 @@
     mouse = new Vector2()
     camera = new PerspectiveCamera(params.cameraFOV, window.innerWidth / window.innerHeight, 0.01, 10000)
 
-    // camera.position.set(-6.539036451399613, 0.11775855411335079, 4.115906106711372)
-    // camera.quaternion.set(0.8753876383119016, 0, -0.4833615858316864, 0)
-
-    camera.position.set(params.cameraPos.x, params.cameraPos.y, params.cameraPos.z)
-    camera.quaternion.set(params.cameraQuat.x, params.cameraQuat.y, params.cameraQuat.z, params.cameraQuat.w)
-
-    scene = new Scene()
-    scene.background = new Color('#000000')
-
     renderer = new WebGLRenderer({ antialias: true, precision: 'mediump' })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
 
-    window.addEventListener('resize', onWindowResize)
     controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
+
+    camera.position.set(params.cameraPos.x, params.cameraPos.y, params.cameraPos.z)
+    camera.quaternion.set(params.cameraQuat.x, params.cameraQuat.y, params.cameraQuat.z, params.cameraQuat.w)
+    controls.target = new Vector3(params.target.x, params.target.y, params.target.z)
+
+    scene = new Scene()
+    scene.background = new Color('#000000')
+
+    window.addEventListener('resize', onWindowResize)
 
     uniforms.u_resolution.value.x = renderer.domElement.width
     uniforms.u_resolution.value.y = renderer.domElement.height
@@ -229,6 +233,11 @@
       y: camera.quaternion.y,
       z: camera.quaternion.z,
       w: camera.quaternion.w,
+    }
+    params.target = {
+      x: controls.target.x,
+      y: controls.target.y,
+      z: controls.target.z,
     }
 
     renderer.render(scene, camera)

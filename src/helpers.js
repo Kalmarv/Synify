@@ -63,11 +63,17 @@ const defaultSettings = {
     z: -0.0036831836985306192,
     w: 0.8753876383115998,
   },
+  target: {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
 }
 
 const params = {
   cameraFOV: getSetting('cameraFOV') || defaultSettings.cameraFOV,
   albumScale: getSetting('albumScale') || defaultSettings.albumScale,
+  target: getSetting('target') || defaultSettings.target,
   lacunarity: getSetting('lacunarity') || defaultSettings.lacunarity,
   gain: getSetting('gain') || defaultSettings.gain,
   speed: getSetting('speed') || defaultSettings.speed,
