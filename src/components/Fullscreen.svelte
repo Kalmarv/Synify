@@ -1,5 +1,14 @@
 <script>
   let imgSrc = './pictures/enterfullscreen.svg'
+
+  const isMobile = () => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const enterfullscreen = () => {
     const elem = document.documentElement
     imgSrc = './pictures/exitfullscreen.svg'
@@ -36,7 +45,9 @@
   }
 </script>
 
-<img src={imgSrc} alt="" on:click={toggleFullscreen} />
+{#if !isMobile()}
+  <img src={imgSrc} alt="" on:click={toggleFullscreen} />
+{/if}
 
 <style>
   img {
