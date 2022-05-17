@@ -29,14 +29,17 @@ const parseArtists = (artistJSON) => {
   return artists.join(', ')
 }
 
+// Sometimes it will return 1 color, so we can lower the required
+// distance while still maintaining the color variety of most albums
 const getColors = async (imageURL) => {
-  const options = {
-    crossOrigin: 'Anonymous',
+  const colorRes = await extractColors(imageURL, { crossOrigin: 'Anonymous' })
+
+  if (colorRes.length === 1) {
+    const finalColors = await extractColors(imageURL, { crossOrigin: 'Anonymous', distance: 0 })
+    return finalColors
+  } else {
+    return colorRes
   }
-
-  const colorRes = extractColors(imageURL, options)
-
-  return await colorRes
 }
 
 const remove = (scene, name) => {
