@@ -32,7 +32,7 @@
   Cache.enabled = true
   const clock = new Clock()
   let delta = 0
-  let camera, scene, renderer, albumMesh, colors, raycaster, mouse, bgMesh
+  let camera, scene, renderer, albumMesh, colors, raycaster, mouse, bgMesh, controls
   // because the songName calls a function on update, basic check for if the scene is ready
   let initScene = 0
 
@@ -151,7 +151,9 @@
     document.body.appendChild(renderer.domElement)
 
     window.addEventListener('resize', onWindowResize)
-    new OrbitControls(camera, renderer.domElement)
+    controls = new OrbitControls(camera, renderer.domElement)
+    controls.enableDamping = true
+
     uniforms.u_resolution.value.x = renderer.domElement.width
     uniforms.u_resolution.value.y = renderer.domElement.height
 
@@ -202,6 +204,7 @@
   }
 
   const animate = () => {
+    controls.update()
     requestAnimationFrame(animate)
     renderer.domElement.addEventListener('mousedown', onMouseDown, false)
     renderer.domElement.addEventListener('mousemove', onHover, false)
