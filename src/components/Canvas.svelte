@@ -297,6 +297,7 @@
     // Shader uniforms do not seem to set from params, so we set them manually on the first render
     uniforms.lacunarity.value = params.lacunarity
     uniforms.gain.value = params.gain
+    uniforms.speed_mult.value = params.speed
 
     createAlbum(scene)
 
