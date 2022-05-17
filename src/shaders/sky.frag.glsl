@@ -8,6 +8,7 @@ uniform vec3 col4;
 uniform float u_time;
 uniform float lacunarity;
 uniform float gain;
+uniform float speed_mult;
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 
@@ -133,12 +134,12 @@ void main() {
   vec3 color = vec3(0.0);
 
   vec2 q = vec2(0.);
-  q.x = fbm(st + 0.1 * u_time);
+  q.x = fbm(st + 0.1 * u_time * speed_mult);
   q.y = fbm(st + vec2(1.0));
 
   vec2 r = vec2(0.);
-  r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * u_time);
-  r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * u_time);
+  r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * u_time * speed_mult);
+  r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * u_time * speed_mult);
 
   float f = fbm(st + r);
 

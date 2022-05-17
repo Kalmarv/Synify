@@ -67,6 +67,9 @@
   tab.pages[2].addInput(params, 'gain', { label: 'Gain', min: 0, max: 1 }).on('change', (ev) => {
     uniforms.gain.value = ev.value
   })
+  tab.pages[2].addInput(params, 'speed', { label: 'Speed', min: 0, max: 5 }).on('change', (ev) => {
+    uniforms.speed_mult.value = ev.value
+  })
 
   const saveSettings = pane.addButton({ title: 'Save Settings' })
   const resetSettings = pane.addButton({ title: 'Reset Settings' })
