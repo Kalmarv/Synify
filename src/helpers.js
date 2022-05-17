@@ -142,6 +142,14 @@ const textSpacing = (name, artist, maxLength) => {
   return { nameFormatted, artistFormatted, nameLines, artistLines, totalLines }
 }
 
+const resetSite = () => {
+  window.localStorage.removeItem('code')
+  window.localStorage.removeItem('authToken')
+  window.localStorage.removeItem('code_verifier')
+  window.localStorage.removeItem('refreshToken')
+  window.location.reload()
+}
+
 export {
   choose,
   getSetting,
@@ -153,4 +161,5 @@ export {
   textFormatter,
   textSpacing,
   parseArtists,
+  resetSite,
 }

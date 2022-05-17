@@ -1,15 +1,8 @@
 <script>
+  import { resetSite } from '../helpers.js'
   export let errorMsg
   let nodeRef
   let showError = false
-
-  const resetSite = () => {
-    window.localStorage.removeItem('code')
-    window.localStorage.removeItem('authToken')
-    window.localStorage.removeItem('code_verifier')
-    window.localStorage.removeItem('refreshToken')
-    window.location.reload()
-  }
 </script>
 
 <div bind:this={nodeRef} class="alert alert-error shadow-lg m-8 max-w-md absolute">

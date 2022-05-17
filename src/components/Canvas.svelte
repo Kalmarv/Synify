@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { songName, songArtist, songImage, songLink, albumProg } from '../stores.js'
-  import { choose, getColors, defaultSettings, remove, params, uniforms, textSpacing } from '../helpers.js'
+  import { choose, getColors, defaultSettings, remove, params, uniforms, textSpacing, resetSite } from '../helpers.js'
   import {
     PerspectiveCamera,
     Scene,
@@ -73,6 +73,7 @@
 
   const saveSettings = pane.addButton({ title: 'Save Settings' })
   const resetSettings = pane.addButton({ title: 'Reset Settings' })
+  const logout = pane.addButton({ title: 'Logout' })
 
   saveSettings.on('click', () => {
     let preset = pane.exportPreset()
@@ -85,6 +86,10 @@
     window.localStorage.removeItem('settings')
     pane.importPreset(defaultSettings)
     camera.updateProjectionMatrix()
+  })
+
+  logout.on('click', () => {
+    resetSite()
   })
 
   const createText = (text, scene, name, color, { x, y, z }) => {
