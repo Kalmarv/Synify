@@ -114,8 +114,17 @@
   const createAlbum = (scene) => {
     const geometry = new BoxGeometry()
     let texture = new TextureLoader().load($songImage)
-    const material = new MeshBasicMaterial({ map: texture })
-    albumMesh = new Mesh(geometry, material)
+
+    const albumTextures = [
+      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ map: texture }),
+      new MeshBasicMaterial({ color: 0x000000 }),
+    ]
+
+    albumMesh = new Mesh(geometry, albumTextures)
     albumMesh.position.set(0, 0, -2)
     albumMesh.scale.set(params.albumScale, params.albumScale, 0.1)
     albumMesh.name = 'Album'
@@ -231,8 +240,9 @@
     uniforms.col3.value = new Color(shaderColors[2])
     uniforms.col4.value = new Color(shaderColors[3])
 
-    if (albumMesh?.material?.map) {
-      albumMesh.material.map = new TextureLoader().load($songImage)
+    // Front texture
+    if (albumMesh?.material[4]?.map) {
+      albumMesh.material[4].map = new TextureLoader().load($songImage)
     }
     remove(scene, 'Artist')
     remove(scene, 'Title')
