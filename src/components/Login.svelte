@@ -89,6 +89,11 @@
         Made by
         <a href="https://github.com/Kalmarv" class="link link-hover">Kalmarv</a> with ❤
       </p>
+
+      <p>
+        Found a bug or want to request a feature? Submit an issue
+        <a href="https://github.com/Kalmarv/Synify/issues" class="link">here</a>
+      </p>
       <a href="https://github.com/Kalmarv/Synify" class="text-gray-400 hover:text-white">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"
           ><path
