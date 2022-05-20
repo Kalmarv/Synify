@@ -96,30 +96,33 @@
           break
       }
     })
-  tab.pages[2].addInput(params, 'lacunarity', { label: 'Lacunarity', min: 0, max: 5 }).on('change', (ev) => {
+  const flowSettings = tab.pages[2].addFolder({ title: 'Flow Settings', expanded: false })
+  flowSettings.addInput(params, 'lacunarity', { label: 'Lacunarity', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.lacunarity.value = ev.value
   })
-  tab.pages[2].addInput(params, 'gain', { label: 'Gain', min: 0, max: 1 }).on('change', (ev) => {
+  flowSettings.addInput(params, 'gain', { label: 'Gain', min: 0, max: 1 }).on('change', (ev) => {
     uniforms.gain.value = ev.value
+  })
+  const tunnelSettings = tab.pages[2].addFolder({ title: 'Tunnel Settings', expanded: false })
+  tunnelSettings.addInput(params, 'glow', { label: 'Glow', min: 0, max: 1 }).on('change', (ev) => {
+    uniforms.glow.value = ev.value
+  })
+  tunnelSettings.addInput(params, 'noise_step', { label: 'Noise Step', min: 0, max: 15 }).on('change', (ev) => {
+    uniforms.noise_step.value = ev.value
+  })
+  tunnelSettings.addInput(params, 'noise_shape', { label: 'Noise Shape', min: 0, max: 2 }).on('change', (ev) => {
+    uniforms.noise_shape.value = ev.value
+  })
+  tunnelSettings.addInput(params, 'noise_scale', { label: 'Noise Scale', min: 0, max: 20 }).on('change', (ev) => {
+    uniforms.noise_scale.value = ev.value
   })
   tab.pages[2].addInput(params, 'speed', { label: 'Speed', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.speed_mult.value = ev.value
   })
-  tab.pages[2].addInput(params, 'glow', { label: 'Glow', min: 0, max: 1 }).on('change', (ev) => {
-    uniforms.glow.value = ev.value
-  })
-  tab.pages[2].addInput(params, 'noise_step', { label: 'Noise Step', min: 0, max: 15 }).on('change', (ev) => {
-    uniforms.noise_step.value = ev.value
-  })
-  tab.pages[2].addInput(params, 'noise_shape', { label: 'Noise Shape', min: 0, max: 2 }).on('change', (ev) => {
-    uniforms.noise_shape.value = ev.value
-  })
-  tab.pages[2].addInput(params, 'noise_scale', { label: 'Noise Scale', min: 0, max: 20 }).on('change', (ev) => {
-    uniforms.noise_scale.value = ev.value
-  })
 
   const saveSettings = pane.addButton({ title: 'Save Settings' })
   const resetSettings = pane.addButton({ title: 'Reset Settings' })
+  pane.addSeparator()
   const logout = pane.addButton({ title: 'Logout' })
 
   saveSettings.on('click', () => {
