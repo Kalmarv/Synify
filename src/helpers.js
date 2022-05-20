@@ -52,9 +52,9 @@ const remove = (scene, name) => {
 const defaultSettings = {
   cameraFOV: 26,
   albumScale: 2.5,
-  lacunarity: 1.95,
-  gain: 0.52,
-  speed: 1.0,
+  lacunarity: 0.75,
+  gain: 0.3,
+  speed: 0.35,
   cameraPos: {
     x: -6.5390364514,
     y: 0.1177585541,
