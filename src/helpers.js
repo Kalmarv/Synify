@@ -54,7 +54,12 @@ const defaultSettings = {
   albumScale: 2.5,
   lacunarity: 0.75,
   gain: 0.3,
+  glow: 0,
   speed: 0.35,
+  noise_step: 11.0,
+  noise_shape: 1.2,
+  noise_scale: 1.7,
+  shader: 'flow',
   cameraPos: {
     x: -6.5390364514,
     y: 0.1177585541,
@@ -79,7 +84,12 @@ const params = {
   target: getSetting('target') || defaultSettings.target,
   lacunarity: getSetting('lacunarity') || defaultSettings.lacunarity,
   gain: getSetting('gain') || defaultSettings.gain,
+  glow: getSetting('glow') || defaultSettings.glow,
   speed: getSetting('speed') || defaultSettings.speed,
+  noise_step: getSetting('noise_step') || defaultSettings.noise_step,
+  noise_shape: getSetting('noise_shape') || defaultSettings.noise_shape,
+  noise_scale: getSetting('noise_scale') || defaultSettings.noise_scale,
+  shader: getSetting('shader') || defaultSettings.shader,
   cameraPos: getSetting('cameraPos') || defaultSettings.cameraPos,
   cameraQuat: getSetting('cameraQuat') || defaultSettings.cameraQuat,
 }
@@ -87,15 +97,31 @@ const params = {
 const uniforms = {
   u_time: {
     type: 'f',
-    value: params.lacunarity,
+    value: 0,
   },
   lacunarity: {
     type: 'f',
-    value: params.gain,
+    value: params.lacunarity,
   },
   gain: {
     type: 'f',
-    value: 0.52,
+    value: params.gain,
+  },
+  glow: {
+    type: 'f',
+    value: params.glow,
+  },
+  noise_step: {
+    type: 'f',
+    value: params.noise_step,
+  },
+  noise_shape: {
+    type: 'f',
+    value: params.noise_shape,
+  },
+  noise_scale: {
+    type: 'f',
+    value: params.noise_scale,
   },
   u_resolution: {
     type: 'v2',

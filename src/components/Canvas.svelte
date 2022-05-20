@@ -23,8 +23,9 @@
   import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import { Pane } from 'tweakpane'
-  import skyFrag from '../shaders/sky.frag.glsl'
-  import skyVert from '../shaders/sky.vert.glsl'
+  import flowFrag from '../shaders/bgFlow.frag.glsl'
+  import tunnelFrag from '../shaders/bgTunnel.frag.glsl'
+  import bgVert from '../shaders/bg.vert.glsl'
   import textFrag1 from '../shaders/text1.frag.glsl'
   import textFrag2 from '../shaders/text2.frag.glsl'
   import textVert from '../shaders/text.vert.glsl'
@@ -65,6 +66,36 @@
     albumMesh.scale.x = ev.value
     albumMesh.scale.y = ev.value
   })
+  tab.pages[2]
+    .addInput(params, 'shader', {
+      label: 'Shader',
+      options: {
+        flow: 'Flow',
+        tunnel: 'Tunnel',
+      },
+    })
+    .on('change', (ev) => {
+      switch (ev.value) {
+        case 'Flow':
+          bgMesh.material.dispose()
+          bgMesh.material = new ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: bgVert,
+            fragmentShader: flowFrag,
+            side: BackSide,
+          })
+          break
+        case 'Tunnel':
+          bgMesh.material.dispose()
+          bgMesh.material = new ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: bgVert,
+            fragmentShader: tunnelFrag,
+            side: BackSide,
+          })
+          break
+      }
+    })
   tab.pages[2].addInput(params, 'lacunarity', { label: 'Lacunarity', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.lacunarity.value = ev.value
   })
@@ -73,6 +104,18 @@
   })
   tab.pages[2].addInput(params, 'speed', { label: 'Speed', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.speed_mult.value = ev.value
+  })
+  tab.pages[2].addInput(params, 'glow', { label: 'Glow', min: 0, max: 1 }).on('change', (ev) => {
+    uniforms.glow.value = ev.value
+  })
+  tab.pages[2].addInput(params, 'noise_step', { label: 'Noise Step', min: 0, max: 15 }).on('change', (ev) => {
+    uniforms.noise_step.value = ev.value
+  })
+  tab.pages[2].addInput(params, 'noise_shape', { label: 'Noise Shape', min: 0, max: 2 }).on('change', (ev) => {
+    uniforms.noise_shape.value = ev.value
+  })
+  tab.pages[2].addInput(params, 'noise_scale', { label: 'Noise Scale', min: 0, max: 20 }).on('change', (ev) => {
+    uniforms.noise_scale.value = ev.value
   })
 
   const saveSettings = pane.addButton({ title: 'Save Settings' })
@@ -284,8 +327,8 @@
   const createBg = () => {
     let bgMaterial = new ShaderMaterial({
       uniforms: uniforms,
-      vertexShader: skyVert,
-      fragmentShader: skyFrag,
+      vertexShader: bgVert,
+      fragmentShader: params.shader === 'Flow' ? flowFrag : tunnelFrag,
       side: BackSide,
     })
 
@@ -312,6 +355,10 @@
     uniforms.lacunarity.value = params.lacunarity
     uniforms.gain.value = params.gain
     uniforms.speed_mult.value = params.speed
+    uniforms.glow.value = params.glow
+    uniforms.noise_step.value = params.noise_step
+    uniforms.noise_shape.value = params.noise_shape
+    uniforms.noise_scale.value = params.noise_scale
 
     createAlbum(scene)
 
