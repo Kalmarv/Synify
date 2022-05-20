@@ -60,6 +60,7 @@ const defaultSettings = {
   noise_shape: 1.2,
   noise_scale: 1.7,
   shader: 'flow',
+  thickness: 0.03,
   cameraPos: {
     x: -6.5390364514,
     y: 0.1177585541,
@@ -90,6 +91,7 @@ const params = {
   noise_shape: getSetting('noise_shape') || defaultSettings.noise_shape,
   noise_scale: getSetting('noise_scale') || defaultSettings.noise_scale,
   shader: getSetting('shader') || defaultSettings.shader,
+  thickness: getSetting('thickness') || defaultSettings.thickness,
   cameraPos: getSetting('cameraPos') || defaultSettings.cameraPos,
   cameraQuat: getSetting('cameraQuat') || defaultSettings.cameraQuat,
 }
@@ -122,6 +124,10 @@ const uniforms = {
   noise_scale: {
     type: 'f',
     value: params.noise_scale,
+  },
+  thickness: {
+    type: 'f',
+    value: params.thickness,
   },
   u_resolution: {
     type: 'v2',

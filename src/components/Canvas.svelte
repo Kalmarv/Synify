@@ -107,7 +107,7 @@
   tunnelSettings.addInput(params, 'glow', { label: 'Glow', min: 0, max: 1 }).on('change', (ev) => {
     uniforms.glow.value = ev.value
   })
-  tunnelSettings.addInput(params, 'noise_step', { label: 'Noise Step', min: 0, max: 15 }).on('change', (ev) => {
+  tunnelSettings.addInput(params, 'noise_step', { label: 'Noise Layers', min: 0, max: 15 }).on('change', (ev) => {
     uniforms.noise_step.value = ev.value
   })
   tunnelSettings.addInput(params, 'noise_shape', { label: 'Noise Shape', min: 0, max: 2 }).on('change', (ev) => {
@@ -115,6 +115,9 @@
   })
   tunnelSettings.addInput(params, 'noise_scale', { label: 'Noise Scale', min: 0, max: 20 }).on('change', (ev) => {
     uniforms.noise_scale.value = ev.value
+  })
+  tunnelSettings.addInput(params, 'thickness', { label: 'Line Thickness', min: 0, max: 0.1 }).on('change', (ev) => {
+    uniforms.thickness.value = ev.value
   })
   tab.pages[2].addInput(params, 'speed', { label: 'Speed', min: 0, max: 5 }).on('change', (ev) => {
     uniforms.speed_mult.value = ev.value
@@ -362,6 +365,7 @@
     uniforms.noise_step.value = params.noise_step
     uniforms.noise_shape.value = params.noise_shape
     uniforms.noise_scale.value = params.noise_scale
+    uniforms.thickness.value = params.thickness
 
     createAlbum(scene)
 

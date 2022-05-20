@@ -11,6 +11,7 @@ uniform float glow;
 uniform float noise_step;
 uniform float noise_shape;
 uniform float noise_scale;
+uniform float thickness;
 
 vec3 hash3(vec2 p) {
   vec3 q = vec3(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)),
@@ -86,9 +87,9 @@ void main() {
 
   // draw outline around stepped noise
   float outline =
-      1.0 - step(smoothstep(stepNoise - 0.03, stepNoise, noise) -
-                     (smoothstep(stepNoise, stepNoise + 0.03, noise)),
-                 0.03);
+      1.0 - step(smoothstep(stepNoise - thickness, stepNoise, noise) -
+                     (smoothstep(stepNoise, stepNoise + thickness, noise)),
+                 thickness);
   vec3 outlineCol = outline * palette(sin01(u_time * speed_mult * 1.0));
 
   // get tunnel color from palette. I tried directly attenuating this by length
