@@ -178,12 +178,12 @@
     let texture = new TextureLoader().load($songImage)
 
     const albumTextures = [
-      new MeshBasicMaterial({ color: 0x000000 }),
-      new MeshBasicMaterial({ color: 0x000000 }),
-      new MeshBasicMaterial({ color: 0x000000 }),
-      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ color: 0x111111 }),
+      new MeshBasicMaterial({ color: 0x111111 }),
+      new MeshBasicMaterial({ color: 0x111111 }),
+      new MeshBasicMaterial({ color: 0x111111 }),
       new MeshBasicMaterial({ map: texture }),
-      new MeshBasicMaterial({ color: 0x000000 }),
+      new MeshBasicMaterial({ color: 0x111111 }),
     ]
 
     albumMesh = new Mesh(geometry, albumTextures)

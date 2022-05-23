@@ -4,7 +4,7 @@ uniform vec3 col2;
 vec3 mapColors(vec3 normals) {
   float isblue = step(0.99, normals.z);
   vec3 percent = vec3(isblue);
-  vec3 colors = mix(vec3(0.0), col2, percent);
+  vec3 colors = mix(vec3(0.05), col2, percent);
   return vec3(colors);
 }
 
