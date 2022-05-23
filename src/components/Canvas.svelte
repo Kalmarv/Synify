@@ -229,7 +229,7 @@
     uniforms.u_resolution.value.y = renderer.domElement.height
   }
 
-  const onMouseDown = (e) => {
+  const onMouseUp = (e) => {
     e.preventDefault()
     mouse.x = (e.clientX / window.innerWidth) * 2 - 1
     mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
@@ -267,7 +267,7 @@
   const animate = () => {
     controls.update()
     requestAnimationFrame(animate)
-    renderer.domElement.addEventListener('mousedown', onMouseDown, false)
+    renderer.domElement.addEventListener('mouseup', onMouseUp, false)
     renderer.domElement.addEventListener('mousemove', onHover, false)
 
     clock.getDelta()
